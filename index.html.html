@@ -1,0 +1,2869 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jackpot Casino - B1+/B2 Business English</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Great+Vibes&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        :root {
+            --ocean-dark: #041527;
+            --ocean-mid: #0a2e52;
+            --ocean-light: #12588c;
+            --gold: #fbbf24;
+            --gold-dark: #b45309;
+        }
+
+        * {
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            height: 100dvh;
+            width: 100vw;
+            overflow: hidden; /* Prevent vertical scrolling across all viewports */
+            background: radial-gradient(circle at 50% 20%, #15659c 0%, #093054 45%, #031120 100%);
+            color: #f8fafc;
+        }
+
+        /* Fuentes temáticas de Casino */
+        .font-casino-script {
+            font-family: 'Great Vibes', cursive;
+        }
+        .font-casino-title {
+            font-family: 'Cinzel Decorative', serif;
+        }
+
+        /* Burbujas submarinas animadas */
+        .bubbles {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .bubble {
+            position: absolute;
+            bottom: -50px;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.05));
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            animation: floatUp linear infinite;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(1); opacity: 0; }
+            15% { opacity: 0.7; }
+            85% { opacity: 0.5; }
+            100% { transform: translateY(-110vh) scale(1.2); opacity: 0; }
+        }
+
+        /* Rayos de luz submarinos */
+        .light-rays {
+            position: fixed;
+            top: -20%;
+            left: 10%;
+            width: 80%;
+            height: 80%;
+            background: conic-gradient(from 160deg at 50% 0%, transparent 0deg, rgba(125, 211, 252, 0.12) 15deg, transparent 30deg, rgba(125, 211, 252, 0.1) 45deg, transparent 60deg);
+            filter: blur(20px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Paneles tipo Cristal Submarino & Casino */
+        .casino-glass {
+            background: rgba(6, 26, 48, 0.78);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(56, 189, 248, 0.1);
+        }
+
+        /* Animación de escaneo del Bot Carta de As */
+        .ace-card {
+            background: linear-gradient(145deg, #ffffff 0%, #f1f5f9 100%);
+            border: 3px solid #fbbf24;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.6), 0 0 15px rgba(251, 191, 36, 0.4);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        .ace-card:hover {
+            transform: translateY(-4px) rotate(1deg);
+        }
+        .scanner-laser {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, #ef4444, #38bdf8, #ef4444, transparent);
+            box-shadow: 0 0 12px #ef4444, 0 0 20px #38bdf8;
+            animation: scanMove 1.8s ease-in-out infinite;
+            display: none;
+            z-index: 20;
+        }
+        .scanning .scanner-laser {
+            display: block;
+        }
+        @keyframes scanMove {
+            0%, 100% { top: 5%; }
+            50% { top: 92%; }
+        }
+
+        /* Animación de pulso de micrófono */
+        @keyframes micPulse {
+            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+            70% { box-shadow: 0 0 0 18px rgba(239, 68, 68, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+        .mic-recording {
+            animation: micPulse 1.4s infinite;
+        }
+
+        /* Ficha de casino giratoria */
+        .poker-chip {
+            border: 4px dashed #ffffff;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.4), inset 0 0 8px rgba(0,0,0,0.4);
+        }
+
+        /* Permitir seleccionar texto solo en inputs/textareas */
+        input, textarea {
+            user-select: text;
+        }
+
+        /* Responsive Aspect Ratio Framing: 9:16 on Mobile, 3:2 on Desktop */
+        #viewport-frame {
+            width: min(100vw, calc(100dvh * 9 / 16));
+            height: min(100dvh, calc(100vw * 16 / 9));
+            max-width: 100vw;
+            max-height: 100dvh;
+        }
+        @media (min-width: 768px) {
+            #viewport-frame {
+                width: min(100vw, calc(100dvh * 3 / 2));
+                height: min(100dvh, calc(100vw * 2 / 3));
+            }
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center h-screen h-[100dvh] w-screen overflow-hidden relative bg-[#020b16]">
+
+    <!-- Fondo Submarino Decorativo -->
+    <div class="light-rays"></div>
+    <div class="bubbles" id="bubbles-container"></div>
+
+    <!-- Aspect-Ratio Locked Stage (9:16 Mobile / 3:2 Desktop) -->
+    <div id="viewport-frame" class="relative z-10 flex flex-col overflow-hidden md:rounded-3xl md:border md:border-amber-400/25 md:shadow-[0_0_50px_rgba(0,0,0,0.85)] bg-[radial-gradient(circle_at_50%_20%,#15659c_0%,#093054_45%,#031120_100%)]">
+
+    <!-- Floating Fullscreen Toggle Button (Always accessible on Mobile & Desktop) -->
+    <button type="button" id="fullscreen-toggle-btn" onclick="toggleFullScreen()" title="Toggle Full Screen"
+        class="fixed bottom-2.5 right-2.5 z-40 w-8 h-8 rounded-full bg-slate-900/85 hover:bg-slate-800 border border-amber-400/50 text-amber-300 text-xs flex items-center justify-center shadow-lg cursor-pointer transition opacity-80 hover:opacity-100">
+        <i id="fullscreen-icon" class="fa-solid fa-expand"></i>
+    </button>
+
+    <!-- =====================================================================
+         1. PANTALLA DE BIENVENIDA (WELCOME SCREEN - ADAPTIVE 9:16 MOBILE & 3:2 DESKTOP)
+    ====================================================================== -->
+    <section id="welcome-screen" class="relative z-10 flex items-center justify-center h-full w-full p-2.5 sm:p-4 md:p-6 overflow-hidden">
+        <!-- Floating Theme Decorations -->
+        <div class="absolute top-5 left-6 text-amber-400/25 text-5xl rotate-[-15deg] hidden md:block pointer-events-none"><i class="fa-solid fa-dice"></i></div>
+        <div class="absolute bottom-6 right-8 text-sky-300/20 text-6xl rotate-[12deg] hidden md:block pointer-events-none"><i class="fa-solid fa-fish-fins"></i></div>
+        <div class="absolute top-6 right-8 text-red-500/25 text-4xl rotate-[20deg] hidden md:block pointer-events-none">♠️</div>
+
+        <div class="casino-glass rounded-3xl max-w-4xl w-full max-h-full p-3.5 sm:p-5 md:p-6 relative border-2 border-amber-400/50 flex flex-col md:flex-row items-center justify-between gap-3 md:gap-6 overflow-hidden">
+            
+            <!-- LEFT COLUMN (Desktop) / TOP HEADER (Mobile): Branding & Device Badge -->
+            <div class="w-full md:w-5/12 flex flex-col items-center md:items-start text-center md:text-left justify-center flex-shrink-0 md:border-r md:border-amber-400/25 md:pr-5">
+                <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-sky-950/90 border border-sky-400/40 text-sky-300 text-[9px] sm:text-[10px] font-bold tracking-wider uppercase mb-1">
+                    <i class="fa-solid fa-water"></i> Under the Sea • CEFR B1+/B2
+                </div>
+
+                <!-- Casino Title -->
+                <div class="my-0.5">
+                    <h1 class="text-3xl sm:text-4xl md:text-5xl font-casino-title font-black tracking-wider text-white drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)] leading-none">
+                        <span class="font-casino-script text-5xl sm:text-6xl md:text-7xl text-amber-300 -mr-1.5">J</span>ACKPOT
+                    </h1>
+                    <p class="font-casino-script text-2xl sm:text-3xl md:text-4xl text-sky-200 -mt-1.5 sm:-mt-2 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
+                        Casino
+                    </p>
+                </div>
+
+                <p class="text-slate-300 text-[10px] sm:text-xs leading-snug mt-1 max-w-xs">
+                    Welcome to the executive underwater casino! Enter your name and select a unique avatar to start your 4-station English challenge.
+                </p>
+
+                <!-- Auto-Detected Device Indicator -->
+                <div id="device-mode-badge" class="mt-2 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-950/80 border border-slate-700 text-[10px] font-bold text-amber-300">
+                    <i class="fa-solid fa-display"></i> Detecting Device...
+                </div>
+            </div>
+
+            <!-- RIGHT COLUMN (Desktop) / BOTTOM CONTROLS (Mobile): Player Form, Room Code & Leader Access -->
+            <div class="w-full md:w-7/12 flex flex-col justify-center space-y-2.5 text-left overflow-hidden">
+                <div>
+                    <label class="block text-[10px] sm:text-xs font-bold uppercase tracking-wider text-amber-300 mb-1">
+                        <i class="fa-solid fa-id-badge mr-1"></i> Player / Team Name
+                    </label>
+                    <input type="text" id="player-name-input" maxlength="22" placeholder="e.g., Ocean Sharks / Alex..."
+                        class="w-full px-3.5 py-2 rounded-xl bg-slate-900/90 border border-sky-400/40 text-white placeholder-slate-400 focus:outline-none focus:border-amber-400 text-xs sm:text-sm font-semibold">
+                </div>
+
+                <div>
+                    <div class="flex justify-between items-center mb-1">
+                        <label class="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-amber-300">
+                            <i class="fa-solid fa-fish mr-1"></i> Unique Avatar
+                        </label>
+                        <span class="text-[10px] text-sky-300" id="avatar-status-hint">Locked once taken</span>
+                    </div>
+                    <div id="avatar-grid" class="grid grid-cols-6 gap-1.5">
+                        <!-- Avatars rendered by JS -->
+                    </div>
+                </div>
+
+                <div id="welcome-error" class="hidden text-center text-[11px] font-semibold text-red-400 bg-red-950/60 border border-red-500/40 py-1 px-2.5 rounded-lg">
+                    Please enter your name and choose an available avatar.
+                </div>
+
+                <button onclick="startGame()"
+                    class="w-full py-2.5 sm:py-3 rounded-xl bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 hover:from-amber-400 hover:to-yellow-300 text-slate-950 font-extrabold text-xs sm:text-sm tracking-wide shadow-[0_0_20px_rgba(251,191,36,0.45)] transition transform active:scale-95 flex items-center justify-center gap-2 cursor-pointer">
+                    <i class="fa-solid fa-coins"></i> ENTER CASINO & CLAIM 3 CHIPS
+                </button>
+
+                <!-- Room Code Join Bar -->
+                <div class="pt-2 border-t border-slate-700/60 flex items-center justify-between gap-2">
+                    <span class="text-[10px] font-bold text-sky-300 uppercase tracking-wider flex items-center gap-1">
+                        <i class="fa-solid fa-qrcode text-amber-400"></i> Room Code:
+                    </span>
+                    <div class="flex items-center gap-1.5">
+                        <input type="text" id="player-room-code-input" maxlength="8" placeholder="CODE"
+                            oninput="this.value = this.value.toUpperCase()"
+                            class="w-20 sm:w-24 px-2 py-1 rounded-lg bg-slate-950/90 border border-sky-400/40 text-center text-amber-300 font-mono text-xs font-extrabold uppercase tracking-widest focus:outline-none focus:border-amber-400">
+                        <button type="button" onclick="joinRoomByCode()"
+                            class="text-[10px] font-extrabold px-2.5 py-1 rounded-lg bg-sky-600 hover:bg-sky-500 text-white cursor-pointer transition">
+                            Connect
+                        </button>
+                        <span id="room-status-pill" class="text-[10px] font-bold px-2 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-400/40">
+                            LIVE
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Exclusive One-Time Leader Access Option (Desktop Only & Disappears once claimed) -->
+                <div id="leader-claim-wrapper" class="hidden md:block pt-1.5 border-t border-slate-700/70">
+                    <button type="button" id="open-leader-btn" onclick="toggleLeaderForm()"
+                        class="w-full py-1.5 px-3 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-amber-400/40 text-amber-300 text-[11px] font-bold tracking-wide flex items-center justify-center gap-2 cursor-pointer transition">
+                        <i class="fa-solid fa-desktop"></i> Leader Mode • Desktop Only (1 Facilitator Spot)
+                    </button>
+
+                    <div id="leader-login-form" class="hidden mt-2 p-2.5 rounded-xl bg-slate-950/95 border border-amber-400/50 text-left space-y-1.5">
+                        <div class="flex items-center justify-between">
+                            <span class="text-[10px] font-extrabold uppercase text-amber-400">Claim Exclusive Leader Spot</span>
+                            <button type="button" onclick="toggleLeaderForm()" class="text-slate-400 hover:text-white text-xs cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
+                        </div>
+                        <div class="grid grid-cols-2 gap-1.5">
+                            <input type="text" id="leader-name-input" maxlength="24" placeholder="Leader Name"
+                                class="w-full px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-700 text-white text-xs focus:outline-none focus:border-amber-400">
+                            <input type="email" id="leader-email-input" placeholder="Leader Email"
+                                class="w-full px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-700 text-white text-xs focus:outline-none focus:border-amber-400">
+                        </div>
+                        <p id="leader-error" class="hidden text-[10px] text-red-400 font-semibold">Please enter a valid name and email address.</p>
+                        <button type="button" onclick="claimLeaderRole()"
+                            class="w-full py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-xs cursor-pointer transition">
+                            Activate Leader Dashboard & Lock Spot
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =====================================================================
+         1B. LEADER CONTROL DASHBOARD (DESKTOP EXCLUSIVE LIVE MONITOR - NO SCROLL)
+    ====================================================================== -->
+    <section id="leader-screen" class="hidden relative z-10 h-full w-full flex flex-col p-3 md:p-4 gap-3 overflow-hidden">
+        <!-- Mobile Screen Warning if Leader Screen is resized below Desktop width -->
+        <div class="flex md:hidden flex-col items-center justify-center h-full text-center casino-glass rounded-2xl p-6 space-y-3">
+            <div class="text-5xl">💻</div>
+            <h2 class="font-casino-title text-lg font-black text-amber-300">Desktop View Required</h2>
+            <p class="text-xs text-slate-300 max-w-xs">Leader Control Mode is designed exclusively for a computer screen. Please maximize your browser window or open Leader Mode on a laptop/desktop.</p>
+        </div>
+
+        <!-- Top Leader Header (Desktop) -->
+        <header class="hidden md:flex casino-glass rounded-2xl px-4 py-3 flex-wrap items-center justify-between gap-2 flex-shrink-0">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-amber-400/20 border border-amber-400 flex items-center justify-center text-xl">👑</div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <h2 class="font-casino-title font-black text-base md:text-lg text-amber-300 tracking-wider">JACKPOT CASINO • LEADER CONTROL</h2>
+                        <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/40 animate-pulse">LIVE SYNC</span>
+                    </div>
+                    <p id="leader-identity-display" class="text-xs text-sky-300">Facilitator: Active</p>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-2">
+                <button type="button" onclick="leaderEndGameForAll()" id="leader-end-game-btn"
+                    class="px-3 py-1.5 rounded-xl bg-gradient-to-r from-rose-600 to-red-600 hover:from-rose-500 hover:to-red-500 text-white text-xs font-extrabold flex items-center gap-1.5 shadow cursor-pointer transition">
+                    <i class="fa-solid fa-flag-checkered"></i> End Game
+                </button>
+                <button type="button" onclick="toggleQrModal(true)"
+                    class="px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-extrabold flex items-center gap-1.5 shadow cursor-pointer transition">
+                    <i class="fa-solid fa-qrcode"></i> Show Join QR
+                </button>
+                <div class="bg-slate-950/90 border border-slate-700 px-3 py-1.5 rounded-xl text-xs font-bold text-white">
+                    Active Players: <span id="leader-player-count" class="text-amber-400">0</span>
+                </div>
+                <button type="button" onclick="releaseLeaderAndExit()"
+                    class="px-3 py-1.5 rounded-xl bg-red-950/80 hover:bg-red-900 border border-red-500/40 text-red-200 text-xs font-bold cursor-pointer transition">
+                    <i class="fa-solid fa-right-from-bracket mr-1"></i> Release Leader & Exit
+                </button>
+            </div>
+        </header>
+
+        <!-- Round Complete Decision Banner for Leader -->
+        <div id="leader-round-alert" class="hidden md:flex items-center justify-between gap-3 px-4 py-2.5 rounded-2xl bg-gradient-to-r from-emerald-900/95 via-teal-900/95 to-emerald-900/95 border-2 border-amber-400 shadow-lg flex-shrink-0">
+            <div class="flex items-center gap-2.5">
+                <span class="text-2xl animate-bounce">🏆</span>
+                <div>
+                    <p class="text-xs font-extrabold uppercase tracking-wider text-amber-300">Round Complete! A Player Finished All 4 Skills</p>
+                    <p id="leader-round-alert-sub" class="text-[11px] text-emerald-100">Decide whether to finish the game now or allow players to continue playing.</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-2 flex-shrink-0">
+                <button type="button" onclick="leaderContinueGame()"
+                    class="px-3 py-1.5 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-sky-400/50 text-sky-200 text-xs font-bold cursor-pointer transition">
+                    <i class="fa-solid fa-play mr-1"></i> Continue Playing
+                </button>
+                <button type="button" onclick="leaderEndGameForAll()"
+                    class="px-3.5 py-1.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 text-xs font-extrabold shadow cursor-pointer transition">
+                    <i class="fa-solid fa-trophy mr-1"></i> Finish Game Now
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Split View: Players Table + Live Activity Feed (Desktop Zero Scroll) -->
+        <div class="hidden md:grid flex-1 grid-cols-3 gap-3 overflow-hidden">
+            <!-- Left 2 Columns: Player Progress Cards -->
+            <div class="col-span-2 casino-glass rounded-2xl p-4 flex flex-col justify-between overflow-hidden">
+                <div class="flex items-center justify-between border-b border-slate-700/80 pb-2 mb-2">
+                    <h3 class="text-xs font-extrabold uppercase tracking-wider text-amber-300">
+                        <i class="fa-solid fa-users-viewfinder mr-1"></i> Player Stations & Chip Tracker
+                    </h3>
+                    <span id="leader-page-indicator" class="text-[11px] font-bold text-sky-300">Page 1 of 1</span>
+                </div>
+
+                <div id="leader-players-grid" class="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-2.5 content-start overflow-hidden">
+                    <div class="col-span-full text-center text-slate-400 text-xs py-10">
+                        Waiting for players to enter Jackpot Casino...
+                    </div>
+                </div>
+
+                <div class="pt-2 border-t border-slate-700/80 flex items-center justify-between">
+                    <span class="text-[11px] text-slate-400">Real-time updates from all connected devices</span>
+                    <div class="flex gap-2">
+                        <button type="button" id="leader-prev-btn" onclick="changeLeaderPage(-1)"
+                            class="px-3 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold disabled:opacity-40 cursor-pointer">
+                            <i class="fa-solid fa-arrow-left mr-1"></i> Previous
+                        </button>
+                        <button type="button" id="leader-next-btn" onclick="changeLeaderPage(1)"
+                            class="px-3 py-1 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-extrabold disabled:opacity-40 cursor-pointer">
+                            Next <i class="fa-solid fa-arrow-right ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Live Action Log -->
+            <div class="casino-glass rounded-2xl p-4 flex flex-col justify-between overflow-hidden">
+                <div class="flex items-center justify-between border-b border-slate-700/80 pb-2 mb-2">
+                    <h3 class="text-xs font-extrabold uppercase tracking-wider text-sky-300">
+                        <i class="fa-solid fa-bolt text-amber-400 mr-1"></i> Live Activity Stream
+                    </h3>
+                    <span class="text-[10px] text-slate-400">Latest 7 Events</span>
+                </div>
+
+                <div id="leader-logs-list" class="flex-1 flex flex-col gap-2 overflow-hidden">
+                    <div class="text-center text-slate-400 text-xs py-8">No player actions recorded yet.</div>
+                </div>
+
+                <div class="pt-2 border-t border-slate-700/80 text-[11px] text-amber-300/90 text-center font-semibold">
+                    Leader option is hidden from all players
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =====================================================================
+         1C. LEADER JOIN QR & ROOM CODE MODAL
+    ====================================================================== -->
+    <div id="leader-qr-modal" class="hidden fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="casino-glass rounded-3xl max-w-md w-full p-5 sm:p-6 text-center border-2 border-amber-400/80 space-y-3 relative">
+            <button type="button" onclick="toggleQrModal(false)"
+                class="absolute top-3.5 right-3.5 w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center cursor-pointer transition">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div>
+                <span class="text-[10px] font-extrabold uppercase tracking-widest text-sky-300">Player Mobile Access</span>
+                <h3 class="font-casino-title text-xl font-black text-amber-300 mt-0.5">SCAN TO JOIN CASINO</h3>
+                <p class="text-xs text-slate-300 mt-1">Players scan this QR code with their phone camera to enter directly in Player Mode.</p>
+            </div>
+
+            <!-- High-Contrast QR Code Box -->
+            <div class="mx-auto w-52 h-52 bg-white rounded-2xl p-3 flex items-center justify-center shadow-[0_0_25px_rgba(251,191,36,0.45)] border-4 border-amber-400">
+                <div id="leader-qrcode-container" class="flex items-center justify-center"></div>
+            </div>
+
+            <!-- 6-Character Room Code Display -->
+            <div class="bg-slate-900/95 border border-amber-400/40 rounded-xl px-3 py-2 flex items-center justify-between">
+                <span class="text-[11px] font-bold text-slate-300 uppercase">Room Code:</span>
+                <span id="leader-room-code-display" class="font-mono text-base font-black text-amber-400 tracking-widest">CASINO</span>
+            </div>
+
+            <!-- Copyable Join Link & Custom URL Regenerator -->
+            <div class="space-y-1.5 text-left">
+                <label class="block text-[10px] font-bold uppercase text-sky-300">1. Paste Public Hosted URL (e.g. Netlify / GitHub Pages) to update QR:</label>
+                <div class="flex items-center gap-1.5">
+                    <input type="text" id="join-url-input" oninput="rebuildQrFromCustomUrl(this.value)"
+                        class="flex-1 px-2.5 py-1.5 rounded-lg bg-slate-950 border border-slate-700 text-[11px] text-slate-200 font-mono focus:outline-none focus:border-amber-400">
+                    <button type="button" id="copy-join-btn" onclick="copyJoinLink()"
+                        class="px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-xs cursor-pointer transition flex-shrink-0">
+                        Copy
+                    </button>
+                </div>
+                <p id="qr-preview-note" class="text-[10px] text-amber-300/95 leading-tight bg-amber-950/50 border border-amber-400/30 rounded-lg p-2">
+                    <i class="fa-solid fa-triangle-exclamation mr-1"></i> <strong>Why a preview link won't open on phones:</strong> This editor runs inside a private sandbox. To make the QR scan work on phones, host this HTML file (e.g., drag & drop to <em>app.netlify.com/drop</em>) and paste that public URL above—or have players enter the <strong>Room Code</strong>!
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- =====================================================================
+         2. INTERFAZ PRINCIPAL DEL CASINO (APP DASHBOARD - MOBILE & DESKTOP FULLSCREEN)
+    ====================================================================== -->
+    <main id="app-screen" class="hidden relative z-10 h-full w-full flex flex-col md:flex-row p-1.5 sm:p-2 md:p-3 gap-1.5 sm:gap-2 md:gap-3 overflow-hidden">
+
+        <!-- MENÚ LATERAL (SIDEBAR - ADAPTS TO TOP BAR ON MOBILE, SIDEBAR ON DESKTOP) -->
+        <aside class="casino-glass rounded-2xl w-full md:w-64 flex-shrink-0 flex flex-row md:flex-col items-center md:items-stretch justify-between p-2 md:p-4 gap-1.5 overflow-hidden">
+            <!-- Logo y Perfil del Jugador -->
+            <div class="flex md:flex-col items-center md:items-stretch gap-1.5 md:gap-3 flex-shrink-0">
+                <div class="hidden md:flex items-center justify-between border-b border-slate-700/80 pb-2">
+                    <div>
+                        <span class="font-casino-title font-bold text-amber-400 text-lg tracking-wider">JACKPOT</span>
+                        <span class="font-casino-script text-2xl text-sky-300 ml-1">Casino</span>
+                    </div>
+                    <span class="text-[10px] bg-sky-900/90 text-sky-200 px-2 py-0.5 rounded-full border border-sky-400/30">B1+/B2</span>
+                </div>
+
+                <!-- Tarjeta de Identificación del Jugador -->
+                <div class="flex items-center gap-1.5 md:gap-2.5 bg-slate-900/80 px-2 py-1.5 md:p-2 rounded-xl border border-amber-400/30">
+                    <div id="hud-avatar" class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-gradient-to-br from-sky-500 to-indigo-700 flex items-center justify-center text-base md:text-xl border-2 border-amber-400 shadow flex-shrink-0">
+                        🦈
+                    </div>
+                    <div class="min-w-0 flex-1">
+                        <p id="hud-name" class="text-[11px] md:text-sm font-bold text-white truncate max-w-[75px] md:max-w-none">Player</p>
+                        <div class="flex items-center gap-1 mt-0.5">
+                            <span class="inline-flex items-center justify-center w-3.5 h-3.5 md:w-4 md:h-4 rounded-full bg-red-600 poker-chip text-[8px] md:text-[9px] font-bold">★</span>
+                            <span id="hud-chips" class="text-[10px] md:text-xs font-extrabold text-amber-400">3 Chips</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NAVEGACIÓN DE LAS 4 ESTACIONES (Colores solicitados exactos, adaptable a móvil y PC) -->
+            <nav class="flex md:flex-col gap-1 md:gap-2 my-auto flex-1 md:flex-initial justify-end md:justify-start overflow-x-auto md:overflow-visible">
+                <p class="hidden md:block text-[10px] font-bold uppercase tracking-widest text-slate-400 px-1">Skill Stations</p>
+
+                <!-- 1. SPEAKING - Letras en Rojo -->
+                <button onclick="selectStation('speaking')" id="nav-speaking"
+                    class="station-btn group flex items-center justify-between px-2 py-1.5 md:px-3 md:py-2.5 rounded-xl bg-white/95 hover:bg-white transition shadow cursor-pointer border-2 border-transparent flex-shrink-0">
+                    <div class="flex items-center gap-1.5 md:gap-2">
+                        <span class="text-sm md:text-base">🎙️</span>
+                        <div class="text-left">
+                            <span class="block font-extrabold text-[10px] sm:text-xs md:text-sm text-red-600 tracking-wide">SPEAKING</span>
+                            <span class="hidden md:block text-[10px] text-slate-600 font-medium">Poker Interview</span>
+                        </div>
+                    </div>
+                    <span id="badge-speaking" class="hidden sm:inline text-xs font-bold text-slate-400 ml-1"><i class="fa-regular fa-circle"></i></span>
+                </button>
+
+                <!-- 2. LISTENING - Letras en Gris -->
+                <button onclick="selectStation('listening')" id="nav-listening"
+                    class="station-btn group flex items-center justify-between px-2 py-1.5 md:px-3 md:py-2.5 rounded-xl bg-white/95 hover:bg-white transition shadow cursor-pointer border-2 border-transparent flex-shrink-0">
+                    <div class="flex items-center gap-1.5 md:gap-2">
+                        <span class="text-sm md:text-base">🎧</span>
+                        <div class="text-left">
+                            <span class="block font-extrabold text-[10px] sm:text-xs md:text-sm text-gray-600 tracking-wide">LISTENING</span>
+                            <span class="hidden md:block text-[10px] text-slate-500 font-medium">Roulette Audio</span>
+                        </div>
+                    </div>
+                    <span id="badge-listening" class="hidden sm:inline text-xs font-bold text-slate-400 ml-1"><i class="fa-regular fa-circle"></i></span>
+                </button>
+
+                <!-- 3. WRITING - Letras en Verde -->
+                <button onclick="selectStation('writing')" id="nav-writing"
+                    class="station-btn group flex items-center justify-between px-2 py-1.5 md:px-3 md:py-2.5 rounded-xl bg-white/95 hover:bg-white transition shadow cursor-pointer border-2 border-transparent flex-shrink-0">
+                    <div class="flex items-center gap-1.5 md:gap-2">
+                        <span class="text-sm md:text-base">✍️</span>
+                        <div class="text-left">
+                            <span class="block font-extrabold text-[10px] sm:text-xs md:text-sm text-green-600 tracking-wide">WRITING</span>
+                            <span class="hidden md:block text-[10px] text-slate-600 font-medium">VIP Mail</span>
+                        </div>
+                    </div>
+                    <span id="badge-writing" class="hidden sm:inline text-xs font-bold text-slate-400 ml-1"><i class="fa-regular fa-circle"></i></span>
+                </button>
+
+                <!-- 4. READING - Letras en Azul Marino -->
+                <button onclick="selectStation('reading')" id="nav-reading"
+                    class="station-btn group flex items-center justify-between px-2 py-1.5 md:px-3 md:py-2.5 rounded-xl bg-white/95 hover:bg-white transition shadow cursor-pointer border-2 border-transparent flex-shrink-0">
+                    <div class="flex items-center gap-1.5 md:gap-2">
+                        <span class="text-sm md:text-base">📖</span>
+                        <div class="text-left">
+                            <span class="block font-extrabold text-[10px] sm:text-xs md:text-sm text-blue-950 tracking-wide">READING</span>
+                            <span class="hidden md:block text-[10px] text-slate-600 font-medium">Blackjack Match</span>
+                        </div>
+                    </div>
+                    <span id="badge-reading" class="hidden sm:inline text-xs font-bold text-slate-400 ml-1"><i class="fa-regular fa-circle"></i></span>
+                </button>
+
+                <!-- FASE FINAL: FINAL JACKPOT -->
+                <button onclick="selectStation('final')" id="nav-final"
+                    class="station-btn group flex items-center justify-between px-2 py-1.5 md:px-3 md:py-2.5 rounded-xl bg-gradient-to-r from-amber-500/20 to-yellow-500/20 border border-amber-400/50 hover:bg-amber-500/30 transition cursor-pointer md:mt-1 flex-shrink-0">
+                    <div class="flex items-center gap-1.5 md:gap-2">
+                        <span class="text-sm md:text-base">🏆</span>
+                        <div class="text-left">
+                            <span class="block font-extrabold text-[10px] sm:text-xs text-amber-300 tracking-wide">FINAL</span>
+                            <span class="hidden md:block text-[10px] text-amber-100/80">Grammar & Vocab</span>
+                        </div>
+                    </div>
+                    <span id="badge-final" class="hidden sm:inline text-xs text-amber-300 ml-1"><i class="fa-solid fa-crown"></i></span>
+                </button>
+            </nav>
+
+            <!-- Botón Cambiar Jugador (Para rotación de equipos sin repetir avatar) -->
+            <div class="hidden md:flex flex-col gap-1.5 pt-2 border-t border-slate-700/80">
+                <button onclick="useChipForHint()"
+                    class="w-full py-1.5 px-3 rounded-xl bg-sky-900/80 hover:bg-sky-800 border border-sky-400/40 text-sky-200 text-xs font-semibold flex items-center justify-center gap-1.5 cursor-pointer transition">
+                    <i class="fa-solid fa-lightbulb text-amber-400"></i> Exchange 1 Chip for Clue
+                </button>
+                <button onclick="switchPlayerModal()"
+                    class="w-full py-1.5 px-3 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 text-[11px] font-medium flex items-center justify-center gap-1.5 cursor-pointer transition">
+                    <i class="fa-solid fa-users"></i> New Player / Switch Turn
+                </button>
+            </div>
+        </aside>
+
+        <!-- ÁREA CENTRAL DE TRABAJO + BOT ESCÁNER DE AS -->
+        <div class="flex-1 flex flex-col lg:flex-row gap-1.5 sm:gap-2 md:gap-3 h-full overflow-hidden min-h-0">
+
+            <!-- CONTENEDOR DE ACTIVIDAD DE LA ESTACIÓN (CERO SCROLL, TODO PAGINADO CON NEXT) -->
+            <section class="casino-glass rounded-2xl flex-1 flex flex-col justify-between p-2.5 sm:p-3 md:p-5 overflow-hidden relative min-h-0">
+
+                <!-- Barra Superior: Título de Estación, Selector de Carta (1-10), Temporizador 7:00 y Botón DONE -->
+                <header class="flex flex-wrap items-center justify-between gap-1.5 pb-2 border-b border-slate-700/80 flex-shrink-0">
+                    <div class="flex items-center gap-2">
+                        <div id="station-icon-box" class="w-8 h-8 md:w-9 md:h-9 rounded-xl bg-amber-400/20 border border-amber-400/50 flex items-center justify-center text-base md:text-lg flex-shrink-0">
+                            ♠️
+                        </div>
+                        <div class="min-w-0">
+                            <h2 id="station-title" class="text-sm sm:text-base md:text-lg font-extrabold text-white leading-tight truncate">Select a Station</h2>
+                            <p id="station-subtitle" class="hidden sm:block text-[11px] text-sky-300 truncate">Choose any of the 4 stations to begin</p>
+                        </div>
+                    </div>
+
+                    <!-- Controles de Carta (1-10), Reloj 7:00 y Botón DONE -->
+                    <div id="station-controls" class="hidden flex items-center gap-1.5 sm:gap-2">
+                        <!-- Selector de Carta Física 1-10 -->
+                        <div class="flex items-center bg-slate-900/90 border border-slate-600 rounded-xl px-2 py-1">
+                            <span class="text-[10px] uppercase font-bold text-amber-400 mr-1">#</span>
+                            <select id="card-selector" onchange="changeCardNumber(this.value)"
+                                class="bg-transparent text-white text-xs font-extrabold focus:outline-none cursor-pointer">
+                                <!-- Opciones 1 a 10 -->
+                            </select>
+                        </div>
+
+                        <!-- Contador de Tiempo de 7 Minutos -->
+                        <div id="timer-box" class="flex items-center gap-1 bg-slate-950/90 border border-amber-400/50 px-2.5 py-1 md:px-3 md:py-1.5 rounded-xl">
+                            <i class="fa-solid fa-stopwatch text-amber-400 text-xs"></i>
+                            <span id="timer-display" class="font-mono text-xs sm:text-sm md:text-base font-extrabold text-white">07:00</span>
+                        </div>
+
+                        <!-- Botón DONE -->
+                        <button onclick="handleDoneClick()" id="done-btn"
+                            class="px-3 py-1 md:px-3.5 md:py-1.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-extrabold text-xs md:text-sm shadow-lg transition transform active:scale-95 flex items-center gap-1 cursor-pointer">
+                            <i class="fa-solid fa-check-double"></i> Done
+                        </button>
+                    </div>
+                </header>
+
+                <!-- CUERPO DINÁMICO DE LA ESTACIÓN (Ajustado para caber sin scroll) -->
+                <div id="station-workspace" class="flex-1 flex flex-col justify-center overflow-hidden py-1.5 md:py-2 min-h-0">
+                    <!-- Vista inicial de bienvenida al tablero -->
+                    <div class="text-center max-w-lg mx-auto space-y-3">
+                        <div class="text-5xl animate-bounce">🎰</div>
+                        <h3 class="text-xl md:text-2xl font-bold text-amber-300">Ready to Place Your Bets?</h3>
+                        <p class="text-xs md:text-sm text-slate-300 leading-relaxed">
+                            Click on any station in the left menu (<span class="text-red-400 font-bold">Speaking</span>, <span class="text-gray-300 font-bold">Listening</span>, <span class="text-green-400 font-bold">Writing</span>, or <span class="text-sky-300 font-bold">Reading</span>).
+                            Each station activates a <strong>7-minute timer</strong>. Match the card number from your physical deck (1–10) and press <strong>Done</strong> when finished!
+                        </p>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2">
+                            <button onclick="selectStation('speaking')" id="home-btn-speaking" class="home-station-btn p-2.5 rounded-xl bg-white text-red-600 font-extrabold text-xs shadow hover:scale-105 transition cursor-pointer">🎙️ Speaking</button>
+                            <button onclick="selectStation('listening')" id="home-btn-listening" class="home-station-btn p-2.5 rounded-xl bg-white text-gray-600 font-extrabold text-xs shadow hover:scale-105 transition cursor-pointer">🎧 Listening</button>
+                            <button onclick="selectStation('writing')" id="home-btn-writing" class="home-station-btn p-2.5 rounded-xl bg-white text-green-600 font-extrabold text-xs shadow hover:scale-105 transition cursor-pointer">✍️ Writing</button>
+                            <button onclick="selectStation('reading')" id="home-btn-reading" class="home-station-btn p-2.5 rounded-xl bg-white text-blue-950 font-extrabold text-xs shadow hover:scale-105 transition cursor-pointer">📖 Reading</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BARRA INFERIOR DE PAGINACIÓN ("NEXT" PARA EVITAR SCROLL) -->
+                <footer id="station-footer" class="hidden pt-2 border-t border-slate-700/80 flex items-center justify-between flex-shrink-0">
+                    <div class="flex items-center gap-2">
+                        <span id="step-indicator" class="text-xs font-bold text-amber-300 bg-slate-900/90 px-3 py-1 rounded-full border border-amber-400/30">
+                            Step 1 of 2
+                        </span>
+                        <span id="footer-tip" class="text-[11px] text-slate-300 hidden sm:inline">Use Next to view questions without scrolling</span>
+                    </div>
+
+                    <div class="flex items-center gap-2">
+                        <button onclick="prevPage()" id="prev-page-btn"
+                            class="px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold disabled:opacity-40 cursor-pointer transition">
+                            <i class="fa-solid fa-arrow-left mr-1"></i> Previous
+                        </button>
+                        <button onclick="nextPage()" id="next-page-btn"
+                            class="px-4 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-extrabold shadow cursor-pointer transition">
+                            Next <i class="fa-solid fa-arrow-right ml-1"></i>
+                        </button>
+                    </div>
+                </footer>
+            </section>
+            <!-- PANEL DERECHO / INFERIOR EN MÓVIL: BOT ESCÁNER EN FORMA DE CARTA DE AS -->
+            <aside class="casino-glass rounded-2xl w-full lg:w-72 h-28 sm:h-32 lg:h-auto flex-shrink-0 flex flex-row lg:flex-col items-center justify-between p-2 sm:p-3 md:p-4 gap-2 sm:gap-3 overflow-hidden">
+
+                <!-- La Carta de As Animada -->
+                <div class="flex flex-col items-center flex-shrink-0">
+                    <div id="ace-bot-card" class="ace-card w-20 h-24 sm:w-24 sm:h-28 lg:w-36 lg:h-48 rounded-xl lg:rounded-2xl p-1.5 lg:p-2.5 flex flex-col justify-between text-slate-900 select-none">
+                        <div class="scanner-laser"></div>
+                        <!-- Esquina superior As -->
+                        <div class="flex justify-between items-start leading-none">
+                            <div class="text-left">
+                                <span class="font-casino-title font-black text-xs sm:text-sm lg:text-xl block">A</span>
+                                <span class="text-xs lg:text-base">♠️</span>
+                            </div>
+                            <span id="bot-status-pill" class="text-[8px] lg:text-[9px] font-extrabold uppercase px-1 py-0.5 rounded bg-slate-900 text-amber-400">
+                                READY
+                            </span>
+                        </div>
+
+                        <!-- Rostro / Escáner central del Bot As -->
+                        <div class="my-auto flex flex-col items-center justify-center">
+                            <div id="bot-face" class="text-2xl sm:text-3xl lg:text-5xl transition-transform duration-300">♠️</div>
+                            <span class="hidden lg:block text-[9px] font-extrabold tracking-widest uppercase text-slate-500 mt-1">ACE SCANNER</span>
+                        </div>
+
+                        <!-- Esquina inferior As invertida -->
+                        <div class="hidden lg:flex justify-between items-end leading-none rotate-180">
+                            <div class="text-left">
+                                <span class="font-casino-title font-black text-lg lg:text-xl block">A</span>
+                                <span class="text-sm lg:text-base">♠️</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Caja de Feedback Inmediato, Errores, Pistas (Clues) y Decisión de Avance -->
+                <div class="flex-1 flex flex-col justify-between w-full h-full bg-slate-950/85 rounded-xl p-2 sm:p-3 border border-sky-400/30 overflow-hidden min-h-0">
+                    <div class="min-h-0 overflow-hidden">
+                        <div class="flex items-center justify-between border-b border-slate-800 pb-1 mb-1">
+                            <span class="text-[10px] sm:text-[11px] font-extrabold uppercase tracking-wider text-amber-400 flex items-center gap-1">
+                                <i class="fa-solid fa-robot"></i> Ace Bot Diagnostic
+                            </span>
+                            <button type="button" onclick="useChipForHint()" class="md:hidden text-[9px] font-bold px-2 py-0.5 rounded bg-sky-900 text-amber-300 border border-sky-500/40 cursor-pointer">
+                                💡 Clue (-1 Chip)
+                            </button>
+                            <span id="bot-score-tag" class="hidden md:inline text-[10px] font-bold text-sky-300">B1+/B2 Check</span>
+                        </div>
+
+                        <div id="bot-feedback-text" class="text-[11px] sm:text-xs text-slate-200 leading-snug space-y-1">
+                            <p>Hello! I am <strong>Ace</strong>, your dealer & evaluator.</p>
+                            <p class="text-sky-300">Complete your activity and click <strong>Done</strong> so I can scan your work and unlock your next station!</p>
+                        </div>
+                    </div>
+
+                    <!-- Cartel: CHOOSE NEXT STATION (Aparece cuando el Bot aprueba al jugador) -->
+                    <div id="choose-next-banner" class="hidden mt-1 p-1.5 sm:p-2.5 rounded-xl bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 text-slate-950 text-center shadow-lg animate-pulse">
+                        <p class="font-casino-title font-black text-[11px] sm:text-xs md:text-sm tracking-wider">✨ CHOOSE NEXT STATION ✨</p>
+                        <p class="hidden sm:block text-[10px] font-bold">You passed! Pick your next skill on the menu.</p>
+                    </div>
+
+                    <!-- Round Complete Choices (Appears once all 4 skills are completed) -->
+                    <div id="player-round-complete-box" class="hidden mt-1.5 p-2 rounded-xl bg-emerald-950/90 border border-emerald-400/60 text-center space-y-1.5">
+                        <p class="text-[11px] font-extrabold text-amber-300 uppercase tracking-wide">🎉 Full 4-Skill Round Completed!</p>
+                        <div class="flex items-center justify-center gap-1.5">
+                            <button type="button" onclick="continuePlayingAfterRound()"
+                                class="flex-1 py-1.5 px-2 rounded-lg bg-sky-700 hover:bg-sky-600 text-white text-[10px] font-extrabold cursor-pointer transition">
+                                Continue Playing
+                            </button>
+                            <button type="button" onclick="finishPlayerSession()"
+                                class="flex-1 py-1.5 px-2 rounded-lg bg-amber-400 hover:bg-amber-300 text-slate-950 text-[10px] font-extrabold cursor-pointer transition">
+                                End Game
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- =====================================================================
+         3. GAME OVER / FINAL PODIUM MODAL (TRIGGERED BY LEADER OR PLAYER FINISH)
+    ====================================================================== -->
+    <section id="gameover-screen" class="hidden fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-md flex items-center justify-center p-3 sm:p-5 overflow-hidden">
+        <div class="casino-glass rounded-3xl max-w-xl w-full p-5 sm:p-7 text-center border-2 border-amber-400/80 space-y-4">
+            <div class="text-5xl">🏆</div>
+            <div>
+                <span class="text-[11px] font-extrabold uppercase tracking-widest text-sky-300">Jackpot Casino • Official Results</span>
+                <h2 class="font-casino-title text-2xl sm:text-3xl font-black text-amber-300 mt-1">GAME FINISHED!</h2>
+                <p id="gameover-subtitle" class="text-xs text-slate-300 mt-1">The facilitator has concluded the session. Great job practicing B1+/B2 English!</p>
+            </div>
+
+            <div id="gameover-leaderboard" class="bg-slate-950/90 border border-slate-700 rounded-2xl p-3 space-y-2 text-left">
+                <!-- Top players populated dynamically -->
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-2 pt-1">
+                <button type="button" id="gameover-resume-btn" onclick="closeGameOverAndContinue()"
+                    class="flex-1 py-2.5 px-4 rounded-xl bg-sky-800 hover:bg-sky-700 text-white text-xs font-extrabold cursor-pointer transition">
+                    <i class="fa-solid fa-rotate-left mr-1"></i> Continue Playing
+                </button>
+                <button type="button" onclick="resetToWelcomeScreen()"
+                    class="flex-1 py-2.5 px-4 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-400 hover:from-amber-400 hover:to-yellow-300 text-slate-950 text-xs font-extrabold cursor-pointer transition">
+                    <i class="fa-solid fa-house mr-1"></i> Back to Lobby
+                </button>
+            </div>
+        </div>
+    </section>
+
+    </div> <!-- End #viewport-frame (9:16 Mobile / 3:2 Desktop) -->
+
+    <!-- =====================================================================
+         JAVASCRIPT: LÓGICA COMPLETA, DATOS DEL PDF, AUDIO Y RECONOCIMIENTO DE VOZ
+    ====================================================================== -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, onSnapshot, collection, addDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Cloud Sync Setup (strictly following /artifacts/{appId}/public/data/...)
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'jackpot-casino-app';
+        let activeRoomId = appId;
+        let db = null;
+        let auth = null;
+        let currentUserUid = null;
+        let isLeaderClaimed = false;
+        let isCurrentUserLeader = false;
+        let allSyncedPlayers = [];
+        let allSyncedLogs = [];
+        let leaderPage = 0;
+        let leaderDismissedRoundAlert = false;
+        let unsubscribeListeners = [];
+
+        function computeShortRoomCode(idStr) {
+            let hash = 0;
+            const s = String(idStr || 'jackpot');
+            for (let i = 0; i < s.length; i++) {
+                hash = ((hash << 5) - hash) + s.charCodeAt(i);
+                hash |= 0;
+            }
+            return Math.abs(hash).toString(36).toUpperCase().padStart(6, '0').slice(0, 6);
+        }
+
+        function clearCloudListeners() {
+            unsubscribeListeners.forEach(unsub => { try { unsub(); } catch (e) {} });
+            unsubscribeListeners = [];
+        }
+
+        function subscribeToRoom(roomId) {
+            if (!db) return;
+            clearCloudListeners();
+            activeRoomId = roomId || appId;
+
+            const codeInput = document.getElementById('player-room-code-input');
+            if (codeInput && !codeInput.value) {
+                codeInput.value = computeShortRoomCode(activeRoomId);
+            }
+
+            // 1. Listen to Leader Lock status (once claimed, hide option for everyone else)
+            const leaderDocRef = doc(db, 'artifacts', activeRoomId, 'public', 'data', 'casino_meta', 'leader_lock');
+            unsubscribeListeners.push(onSnapshot(leaderDocRef, (snap) => {
+                const data = snap.exists() ? snap.data() : null;
+                isLeaderClaimed = !!(data && data.claimed);
+                const wrapper = document.getElementById('leader-claim-wrapper');
+                if (wrapper) {
+                    if (isLeaderClaimed && !isCurrentUserLeader) {
+                        wrapper.classList.remove('md:block');
+                        wrapper.classList.add('hidden');
+                    } else if (!isLeaderClaimed) {
+                        wrapper.classList.add('md:block');
+                        wrapper.classList.remove('hidden');
+                    }
+                }
+            }, (err) => console.debug('Leader lock listener:', err)));
+
+            // 2. Listen to all active players & taken avatars across devices
+            const playersCol = collection(db, 'artifacts', activeRoomId, 'public', 'data', 'casino_players');
+            unsubscribeListeners.push(onSnapshot(playersCol, (snapshot) => {
+                allSyncedPlayers = [];
+                snapshot.forEach((docSnap) => {
+                    const p = docSnap.data();
+                    allSyncedPlayers.push({ id: docSnap.id, ...p });
+                    if (p.avatarId) {
+                        usedAvatars.add(p.avatarId);
+                    }
+                });
+                renderAvatarGrid();
+                if (isCurrentUserLeader) renderLeaderDashboard();
+            }, (err) => console.debug('Players listener:', err)));
+
+            // 3. Listen to live player action logs
+            const logsCol = collection(db, 'artifacts', activeRoomId, 'public', 'data', 'casino_logs');
+            unsubscribeListeners.push(onSnapshot(logsCol, (snapshot) => {
+                allSyncedLogs = [];
+                snapshot.forEach((docSnap) => {
+                    allSyncedLogs.push({ id: docSnap.id, ...docSnap.data() });
+                });
+                allSyncedLogs.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+                if (isCurrentUserLeader) renderLeaderDashboard();
+            }, (err) => console.debug('Logs listener:', err)));
+
+            // 4. Listen to Global Game State (Leader ending or continuing the game)
+            const gameStateRef = doc(db, 'artifacts', activeRoomId, 'public', 'data', 'casino_meta', 'game_state');
+            unsubscribeListeners.push(onSnapshot(gameStateRef, (snap) => {
+                const data = snap.exists() ? snap.data() : null;
+                if (data && data.status === 'ended') {
+                    showGameOverModal('The Leader has decided to end the game! Here are the final standings.');
+                } else if (data && data.status === 'active') {
+                    const goModal = document.getElementById('gameover-screen');
+                    if (goModal && !goModal.classList.contains('hidden') && !isCurrentUserLeader) {
+                        goModal.classList.add('hidden');
+                    }
+                }
+            }, (err) => console.debug('Game state listener:', err)));
+        }
+
+        async function initCloudSync() {
+            try {
+                if (typeof __firebase_config === 'undefined') return;
+                const firebaseConfig = JSON.parse(__firebase_config);
+                const app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
+                currentUserUid = auth.currentUser?.uid || crypto.randomUUID();
+
+                const params = new URLSearchParams(window.location.search);
+            const scannedRoom = params.get('room') || params.get('s');
+            subscribeToRoom(scannedRoom ? decodeURIComponent(scannedRoom).toUpperCase() : appId);
+
+        } catch (e) {
+            console.debug('Offline fallback mode active:', e);
+        }
+    }
+
+    window.joinRoomByCode = function () {
+        const input = document.getElementById('player-room-code-input');
+        const pill = document.getElementById('room-status-pill');
+        if (!input) return;
+        const cleanCode = input.value.trim().toUpperCase().replace(/[^A-Z0-9_-]/g, '');
+        if (!cleanCode) return;
+
+        subscribeToRoom(cleanCode);
+        if (pill) {
+            pill.textContent = 'LINKED';
+            pill.className = 'text-[10px] font-bold px-2 py-1 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-400/40';
+        }
+    };
+
+        window.toggleLeaderForm = function () {
+            if (isLeaderClaimed && !isCurrentUserLeader) return;
+            const form = document.getElementById('leader-login-form');
+            form.classList.toggle('hidden');
+        };
+
+        window.claimLeaderRole = async function () {
+            if (isLeaderClaimed && !isCurrentUserLeader) {
+                document.getElementById('leader-claim-wrapper').classList.add('hidden');
+                return;
+            }
+            const nameVal = document.getElementById('leader-name-input').value.trim();
+            const emailVal = document.getElementById('leader-email-input').value.trim();
+            const errEl = document.getElementById('leader-error');
+
+            if (!nameVal || !emailVal || !emailVal.includes('@')) {
+                errEl.classList.remove('hidden');
+                return;
+            }
+            errEl.classList.add('hidden');
+            isCurrentUserLeader = true;
+            isLeaderClaimed = true;
+
+            // Hide option immediately so no player can ever select it
+            document.getElementById('leader-claim-wrapper').classList.remove('md:block');
+            document.getElementById('leader-claim-wrapper').classList.add('hidden');
+
+            if (db && currentUserUid) {
+                try {
+                    const leaderDocRef = doc(db, 'artifacts', activeRoomId, 'public', 'data', 'casino_meta', 'leader_lock');
+                    await setDoc(leaderDocRef, {
+                        claimed: true,
+                        leaderUid: currentUserUid,
+                        leaderName: nameVal,
+                        leaderEmail: emailVal,
+                        claimedAt: Date.now()
+                    });
+                    const gameStateRef = doc(db, 'artifacts', activeRoomId, 'public', 'data', 'casino_meta', 'game_state');
+                    await setDoc(gameStateRef, { status: 'active', updatedAt: Date.now() });
+                } catch (e) {
+                    console.debug('Leader lock write error:', e);
+                }
+            }
+
+            document.getElementById('leader-identity-display').textContent = `Facilitator: ${nameVal} (${emailVal})`;
+            document.getElementById('welcome-screen').classList.add('hidden');
+            document.getElementById('leader-screen').classList.remove('hidden');
+            generatePlayerJoinQr();
+            toggleQrModal(true);
+            renderLeaderDashboard();
+        };
+
+        window.rebuildQrFromCustomUrl = function (customUrl) {
+            const container = document.getElementById('leader-qrcode-container');
+            if (!container || typeof QRCode === 'undefined') return;
+            const targetUrl = (customUrl || '').trim();
+            if (!targetUrl) return;
+            container.innerHTML = '';
+            try {
+                new QRCode(container, {
+                    text: targetUrl,
+                    width: 184,
+                    height: 184,
+                    colorDark: '#041527',
+                    colorLight: '#ffffff',
+                    correctLevel: QRCode.CorrectLevel.M
+                });
+            } catch (e) {}
+        };
+
+        window.generatePlayerJoinQr = function () {
+        const container = document.getElementById('leader-qrcode-container');
+        const urlInput = document.getElementById('join-url-input');
+        const codeDisplay = document.getElementById('leader-room-code-display');
+        if (!container || !urlInput) return;
+
+        let rawHref = window.location.href || '';
+        let baseUrl = rawHref.split('#')[0].split('?')[0];
+        if (baseUrl.startsWith('blob:')) {
+            baseUrl = baseUrl.replace(/^blob:/, '');
+        }
+        if (!baseUrl || baseUrl === 'about:srcdoc' || baseUrl.startsWith('data:')) {
+            baseUrl = window.location.origin && window.location.origin !== 'null'
+                ? `${window.location.origin}/`
+                : 'https://your-site.netlify.app/';
+        }
+
+        const shortCode = computeShortRoomCode(activeRoomId);
+        if (codeDisplay) codeDisplay.textContent = shortCode;
+
+        // Sync Leader onto the exact same room key as the short code
+        if (activeRoomId !== shortCode) {
+            subscribeToRoom(shortCode);
+        }
+
+        const joinUrl = `${baseUrl}?mode=player&room=${encodeURIComponent(shortCode)}`;
+        urlInput.value = joinUrl;
+        window.rebuildQrFromCustomUrl(joinUrl);
+    };
+
+        window.toggleQrModal = function (show) {
+            const modal = document.getElementById('leader-qr-modal');
+            if (!modal) return;
+            if (show) {
+                generatePlayerJoinQr();
+                modal.classList.remove('hidden');
+            } else {
+                modal.classList.add('hidden');
+            }
+        };
+
+        window.copyJoinLink = function () {
+            const input = document.getElementById('join-url-input');
+            const btn = document.getElementById('copy-join-btn');
+            if (!input) return;
+            input.select();
+            input.setSelectionRange(0, 99999);
+            try {
+                document.execCommand('copy');
+                if (btn) {
+                    btn.textContent = 'Copied!';
+                    setTimeout(() => { btn.textContent = 'Copy'; }, 1800);
+                }
+            } catch (e) {}
+        };
+
+        window.releaseLeaderAndExit = async function () {
+            isCurrentUserLeader = false;
+            isLeaderClaimed = false;
+            if (db && currentUserUid) {
+                try {
+                    const leaderDocRef = doc(db, 'artifacts', activeRoomId, 'public', 'data', 'casino_meta', 'leader_lock');
+                    await deleteDoc(leaderDocRef);
+                } catch (e) {
+                    console.debug('Release leader error:', e);
+                }
+            }
+            toggleQrModal(false);
+            document.getElementById('leader-screen').classList.add('hidden');
+            document.getElementById('welcome-screen').classList.remove('hidden');
+            const wrapper = document.getElementById('leader-claim-wrapper');
+            wrapper.classList.add('md:block');
+            wrapper.classList.remove('hidden');
+            document.getElementById('leader-login-form').classList.add('hidden');
+        };
+
+        window.changeLeaderPage = function (delta) {
+            const perPage = 4;
+            const totalPages = Math.max(1, Math.ceil(allSyncedPlayers.length / perPage));
+            leaderPage = Math.min(Math.max(0, leaderPage + delta), totalPages - 1);
+            renderLeaderDashboard();
+        };
+
+        function renderLeaderDashboard() {
+            const grid = document.getElementById('leader-players-grid');
+            const logsList = document.getElementById('leader-logs-list');
+            const countEl = document.getElementById('leader-player-count');
+            const pageInd = document.getElementById('leader-page-indicator');
+            const prevBtn = document.getElementById('leader-prev-btn');
+            const nextBtn = document.getElementById('leader-next-btn');
+
+            if (!grid || !logsList) return;
+
+            // Check if any player completed a full round of all 4 core skills
+            const roundFinishers = allSyncedPlayers.filter(p => {
+                const c = p.completed || {};
+                return c.speaking && c.listening && c.writing && c.reading;
+            });
+            const roundAlert = document.getElementById('leader-round-alert');
+            const roundAlertSub = document.getElementById('leader-round-alert-sub');
+            if (roundAlert) {
+                if (roundFinishers.length > 0 && !leaderDismissedRoundAlert) {
+                    const names = roundFinishers.map(p => p.name).join(', ');
+                    roundAlertSub.textContent = `Completed 4-skill round: ${names}. End the game now or continue playing?`;
+                    roundAlert.classList.remove('hidden');
+                } else {
+                    roundAlert.classList.add('hidden');
+                }
+            }
+
+            countEl.textContent = allSyncedPlayers.length;
+            const perPage = 4;
+            const totalPages = Math.max(1, Math.ceil(allSyncedPlayers.length / perPage));
+            if (leaderPage >= totalPages) leaderPage = totalPages - 1;
+
+            pageInd.textContent = `Page ${leaderPage + 1} of ${totalPages}`;
+            prevBtn.disabled = leaderPage === 0;
+            nextBtn.disabled = leaderPage >= totalPages - 1;
+
+            if (allSyncedPlayers.length === 0) {
+                grid.innerHTML = `<div class="col-span-full text-center text-slate-400 text-xs py-10">Waiting for players to enter Jackpot Casino...</div>`;
+            } else {
+                const slice = allSyncedPlayers.slice(leaderPage * perPage, (leaderPage + 1) * perPage);
+                grid.innerHTML = slice.map(p => {
+                    const comp = p.completed || {};
+                    return `
+                        <div class="bg-slate-900/95 border border-sky-400/30 rounded-xl p-3 flex flex-col justify-between gap-2">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-2 min-w-0">
+                                    <span class="text-2xl">${p.avatar || '🦈'}</span>
+                                    <div class="min-w-0">
+                                        <p class="text-xs font-extrabold text-white truncate">${p.name}</p>
+                                        <p class="text-[10px] text-amber-300 font-bold">🪙 ${p.chips ?? 3} Chips • Station: ${(p.currentStation || 'Lobby').toUpperCase()} ${p.currentCard && p.currentCard !== '-' ? `(Card #${p.currentCard})` : ''}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-5 gap-1 text-center text-[9px] font-extrabold">
+                                <span class="py-1 rounded ${comp.speaking ? 'bg-emerald-600/30 text-emerald-300 border border-emerald-400/40' : 'bg-slate-800 text-red-400'}">SPK ${comp.speaking ? '✓' : '•'}</span>
+                                <span class="py-1 rounded ${comp.listening ? 'bg-emerald-600/30 text-emerald-300 border border-emerald-400/40' : 'bg-slate-800 text-gray-300'}">LST ${comp.listening ? '✓' : '•'}</span>
+                                <span class="py-1 rounded ${comp.writing ? 'bg-emerald-600/30 text-emerald-300 border border-emerald-400/40' : 'bg-slate-800 text-green-400'}">WRT ${comp.writing ? '✓' : '•'}</span>
+                                <span class="py-1 rounded ${comp.reading ? 'bg-emerald-600/30 text-emerald-300 border border-emerald-400/40' : 'bg-slate-800 text-sky-300'}">REA ${comp.reading ? '✓' : '•'}</span>
+                                <span class="py-1 rounded ${comp.final ? 'bg-amber-500/30 text-amber-300 border border-amber-400/50' : 'bg-slate-800 text-amber-200/70'}">FIN ${comp.final ? '★' : '•'}</span>
+                            </div>
+                            <p class="text-[11px] text-slate-300 truncate bg-slate-950/80 px-2 py-1 rounded border border-slate-800">
+                                <span class="text-sky-400 font-bold">Last:</span> ${p.lastAction || 'Joined table'}
+                            </p>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            if (allSyncedLogs.length === 0) {
+                logsList.innerHTML = `<div class="text-center text-slate-400 text-xs py-8">No player actions recorded yet.</div>`;
+            } else {
+                logsList.innerHTML = allSyncedLogs.slice(0, 7).map(log => {
+                    const timeStr = log.timestamp ? new Date(log.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) : '';
+                    return `
+                        <div class="bg-slate-900/90 border border-slate-700/80 rounded-lg p-2 text-[11px]">
+                            <div class="flex items-center justify-between mb-0.5">
+                                <span class="font-bold text-white">${log.avatar || '🎲'} ${log.playerName}</span>
+                                <span class="text-[9px] text-slate-400 font-mono">${timeStr}</span>
+                            </div>
+                            <p class="text-sky-200 leading-tight">${log.action}</p>
+                        </div>
+                    `;
+                }).join('');
+            }
+        }
+
+        window.leaderContinueGame = async function () {
+            leaderDismissedRoundAlert = true;
+            const roundAlert = document.getElementById('leader-round-alert');
+            if (roundAlert) roundAlert.classList.add('hidden');
+            if (db && currentUserUid) {
+                try {
+                    const gameStateRef = doc(db, 'artifacts', activeRoomId, 'public', 'data', 'casino_meta', 'game_state');
+                    await setDoc(gameStateRef, { status: 'active', updatedAt: Date.now() });
+                } catch (e) {}
+            }
+        };
+
+        window.leaderEndGameForAll = async function () {
+            if (db && currentUserUid) {
+                try {
+                    const gameStateRef = doc(db, 'artifacts', activeRoomId, 'public', 'data', 'casino_meta', 'game_state');
+                    await setDoc(gameStateRef, { status: 'ended', endedAt: Date.now() });
+                } catch (e) {}
+            }
+            showGameOverModal('The Leader has concluded the Jackpot Casino session!');
+        };
+
+        window.showGameOverModal = function (subtitleText) {
+            stopTimer();
+            stopAllListeningAudio();
+            stopRecordingIfActive();
+
+            const modal = document.getElementById('gameover-screen');
+            const sub = document.getElementById('gameover-subtitle');
+            const board = document.getElementById('gameover-leaderboard');
+            const resumeBtn = document.getElementById('gameover-resume-btn');
+            if (!modal || !board) return;
+
+            if (sub && subtitleText) sub.textContent = subtitleText;
+
+            // Build sorted standings from synced players or local player fallback
+            let standings = [...allSyncedPlayers];
+            if (standings.length === 0 && currentPlayer.name) {
+                standings = [{
+                    name: currentPlayer.name,
+                    avatar: currentPlayer.avatar,
+                    chips: currentPlayer.chips,
+                    completed: currentPlayer.completed
+                }];
+            }
+            standings.sort((a, b) => (b.chips ?? 0) - (a.chips ?? 0));
+
+            board.innerHTML = standings.slice(0, 5).map((p, idx) => {
+                const c = p.completed || {};
+                const skillsDone = ['speaking', 'listening', 'writing', 'reading'].filter(k => c[k]).length;
+                const medal = idx === 0 ? '🥇' : idx === 1 ? '🥈' : idx === 2 ? '🥉' : `#${idx + 1}`;
+                return `
+                    <div class="flex items-center justify-between bg-slate-900/95 border border-slate-700 rounded-xl px-3 py-2">
+                        <div class="flex items-center gap-2 min-w-0">
+                            <span class="text-base font-extrabold">${medal}</span>
+                            <span class="text-xl">${p.avatar || '🦈'}</span>
+                            <div class="min-w-0">
+                                <p class="text-xs font-extrabold text-white truncate">${p.name}</p>
+                                <p class="text-[10px] text-sky-300">${skillsDone}/4 Skills • ${c.final ? 'Final Jackpot ★' : 'Practice Round'}</p>
+                            </div>
+                        </div>
+                        <span class="text-xs font-extrabold text-amber-400 bg-amber-400/10 border border-amber-400/40 px-2.5 py-1 rounded-full">
+                            🪙 ${p.chips ?? 3} Chips
+                        </span>
+                    </div>
+                `;
+            }).join('');
+
+            if (resumeBtn) {
+                if (isCurrentUserLeader) {
+                    resumeBtn.textContent = 'Resume Session for Everyone';
+                } else {
+                    resumeBtn.textContent = 'Continue Playing';
+                }
+            }
+
+            modal.classList.remove('hidden');
+            launchFireworksConfetti();
+        };
+
+        window.closeGameOverAndContinue = async function () {
+            document.getElementById('gameover-screen').classList.add('hidden');
+            if (isCurrentUserLeader) {
+                await window.leaderContinueGame();
+            }
+        };
+
+        window.resetToWelcomeScreen = function () {
+            document.getElementById('gameover-screen').classList.add('hidden');
+            if (isCurrentUserLeader) {
+                window.releaseLeaderAndExit();
+            } else {
+                switchPlayerModal();
+            }
+        };
+
+        // Start Firebase Cloud Sync immediately
+        initCloudSync();
+    </script>
+    <script>
+        /* -------------------------------------------------------------------
+           1. DATOS DE AVATARES ÚNICOS (SOLO ANIMALES ACUÁTICOS Y CASINO)
+        ------------------------------------------------------------------- */
+        const AVATARS = [
+            { id: 'shark', icon: '🦈', name: 'Executive Shark' },
+            { id: 'octopus', icon: '🐙', name: 'Octo-Dealer' },
+            { id: 'dolphin', icon: '🐬', name: 'Smart Dolphin' },
+            { id: 'whale', icon: '🐋', name: 'Blue Whale' },
+            { id: 'turtle', icon: '🐢', name: 'Sea Turtle' },
+            { id: 'crab', icon: '🦀', name: 'Golden Crab' },
+            { id: 'tropicalfish', icon: '🐠', name: 'Casino Reef Fish' },
+            { id: 'puffer', icon: '🐡', name: 'Poker Puffer' },
+            { id: 'lobster', icon: '🦞', name: 'VIP Lobster' },
+            { id: 'jelly', icon: '🪼', name: 'Neon Jelly' },
+            { id: 'seal', icon: '🦭', name: 'Captain Seal' },
+            { id: 'crown', icon: '👑', name: 'Casino Royal' }
+        ];
+
+        let usedAvatars = new Set();
+        let selectedAvatarId = 'shark';
+        let currentPlayer = {
+            name: '',
+            avatar: '🦈',
+            chips: 3,
+            completed: { speaking: false, listening: false, writing: false, reading: false, final: false }
+        };
+
+        /* -------------------------------------------------------------------
+           2. CONTENIDO COMPLETO EXTRAÍDO DE SUS DOCUMENTOS (B1+ / B2)
+        ------------------------------------------------------------------- */
+        const GAME_DATA = {
+            speaking: [
+                {
+                    id: 1,
+                    title: "Customer Refund Negotiation",
+                    situation: "A client is demanding a full cash refund for a delayed service. Politely refuse the cash refund according to company policy and negotiate an alternative solution (e.g., voucher, discount, or priority upgrade).",
+                    roleA: "Customer Service Specialist (You)",
+                    roleB: "Dissatisfied Client (Partner / Facilitator)",
+                    keywords: ["understand", "apologize", "policy", "offer", "discount", "voucher", "alternative", "solution", "instead", "credit"],
+                    clue: "Use B1+/B2 diplomatic phrases: 'I completely understand your frustration, however, instead of a refund, we can offer you...'"
+                },
+                {
+                    id: 2,
+                    title: "Requesting a Deadline Extension",
+                    situation: "Your team will not meet Friday's project deadline due to unexpected technical issues. Speak to your manager to explain the cause and request a realistic extension.",
+                    roleA: "Project Lead (You)",
+                    roleB: "Department Manager",
+                    keywords: ["deadline", "extension", "delay", "technical", "progress", "friday", "monday", "quality", "complete", "schedule"],
+                    clue: "Explain the reason clearly and propose a new exact date: 'Due to unforeseen issues, we would like to request an extension until...'"
+                },
+                {
+                    id: 3,
+                    title: "Supplier Price Increase",
+                    situation: "A long-term supplier has increased their prices by 15%. Negotiate better terms, a volume discount, or a phased price adjustment.",
+                    roleA: "Purchasing Officer (You)",
+                    roleB: "Supplier Representative",
+                    keywords: ["price", "increase", "budget", "long-term", "discount", "volume", "contract", "negotiate", "terms", "agree"],
+                    clue: "Emphasize your loyalty as a client: 'Given our long-term partnership, could we negotiate a 10% discount if we place a larger order?'"
+                },
+                {
+                    id: 4,
+                    title: "Resolving a Workplace Disagreement",
+                    situation: "Two colleagues disagree on how to divide the workload for an upcoming conference. Mediate between them and help them reach a fair compromise.",
+                    roleA: "Team Coordinator (You)",
+                    roleB: "Colleagues in Disagreement",
+                    keywords: ["compromise", "fair", "workload", "agree", "both", "priority", "tasks", "solution", "balance", "together"],
+                    clue: "Acknowledge both perspectives: 'I see both points of view. How about we split the tasks based on each person's strengths?'"
+                },
+                {
+                    id: 5,
+                    title: "Department Budget Cut",
+                    situation: "Your department's quarterly budget has been reduced by 20%. Discuss with your supervisor which expenses to cut without affecting core operations.",
+                    roleA: "Operations Analyst (You)",
+                    roleB: "Finance Supervisor",
+                    keywords: ["budget", "reduce", "cut", "expenses", "priority", "essential", "save", "costs", "travel", "online"],
+                    clue: "Use conditionals (B1+/B2): 'If we move our training sessions online, we will save significantly on travel expenses.'"
+                },
+                {
+                    id: 6,
+                    title: "Unexpected Staff Resignation",
+                    situation: "A key team member resigned unexpectedly today. Reassign their urgent client tasks among the remaining staff fairly.",
+                    roleA: "Team Supervisor (You)",
+                    roleB: "Team Member",
+                    keywords: ["resigned", "urgent", "tasks", "cover", "temporary", "support", "client", "priority", "help", "handle"],
+                    clue: "Be supportive and clear: 'Since Alex left unexpectedly, could you temporarily take over the urgent client reports this week?'"
+                },
+                {
+                    id: 7,
+                    title: "Retaining a Cancelling Client",
+                    situation: "An important corporate client threatens to cancel their annual contract due to slow response times. Negotiate new service conditions to keep them.",
+                    roleA: "Account Manager (You)",
+                    roleB: "Corporate Client",
+                    keywords: ["cancel", "contract", "improve", "response", "guarantee", "dedicated", "service", "value", "stay", "conditions"],
+                    clue: "Offer a concrete guarantee: 'We truly value your business. If you stay with us, we will assign a dedicated agent to your account.'"
+                },
+                {
+                    id: 8,
+                    title: "Discussing Realistic Priorities",
+                    situation: "Your manager just assigned three urgent tasks on top of your current workload. Discuss realistic priorities and ask which task should come first.",
+                    roleA: "Employee (You)",
+                    roleB: "Manager",
+                    keywords: ["priorities", "workload", "urgent", "focus", "first", "realistic", "deadline", "quality", "postpone", "which"],
+                    clue: "Ask politely for prioritization: 'To ensure high quality, which of these projects would you like me to prioritize first?'"
+                },
+                {
+                    id: 9,
+                    title: "Refusing Confidential Information",
+                    situation: "A colleague from another department asks you for confidential salary and client data. Politely explain why you cannot share it.",
+                    roleA: "HR / Data Officer (You)",
+                    roleB: "Colleague",
+                    keywords: ["confidential", "policy", "privacy", "share", "authorized", "sorry", "permission", "rules", "protect", "cannot"],
+                    clue: "Be firm yet polite: 'I'm afraid I'm not authorized to share confidential records due to company data protection policies.'"
+                },
+                {
+                    id: 10,
+                    title: "Presentation Equipment Failure",
+                    situation: "Ten minutes before an important client pitch, the main projector and screen fail. Agree on an alternative backup plan with your colleague.",
+                    roleA: "Presenter 1 (You)",
+                    roleB: "Presenter 2",
+                    keywords: ["projector", "failed", "backup", "laptops", "printed", "plan", "alternative", "share", "send", "ready"],
+                    clue: "Propose immediate action: 'Since the projector isn't working, let's email the slides to the clients and use our laptops instead.'"
+                }
+            ],
+
+            reading: [
+                {
+                    id: 1,
+                    title: "READING 1: SUPPLIER OFFERS",
+                    text: "The purchasing department needs 40 office chairs before a training program begins on June 18. Two suppliers have submitted offers.\n\nOfficePro charges $75 per chair and offers free delivery within ten working days. Its chairs have a two-year warranty. However, the supplier cannot guarantee delivery before June 20.\n\nWorkSpace charges $80 per chair, plus a $100 delivery fee. It guarantees delivery by June 16 and provides a three-year warranty. WorkSpace also offers free replacement of damaged items reported within 48 hours of delivery.\n\nThe purchasing manager has a maximum budget of $3,400. Both offers are within the budget, but having the chairs ready before the training program is essential.",
+                    questions: [
+                        { q: "1. What is the purchasing department's main priority?", options: ["A. Buying chairs with the lowest possible price.", "B. Receiving the chairs before the training program.", "C. Avoiding all delivery charges."], correct: 1 },
+                        { q: "2. What advantage does OfficePro offer?", options: ["A. A lower price per chair and free delivery.", "B. A longer warranty than WorkSpace.", "C. Guaranteed delivery by June 16."], correct: 0 },
+                        { q: "3. Why does WorkSpace meet the department's requirements?", options: ["A. It offers the cheapest chairs.", "B. It allows damaged items to be reported at any time.", "C. It guarantees delivery before training and stays within budget."], correct: 2 }
+                    ],
+                    clue: "Check the dates carefully: Training starts on June 18, and WorkSpace guarantees delivery by June 16 ($80 x 40 + $100 = $3,300)."
+                },
+                {
+                    id: 2,
+                    title: "READING 2: AN URGENT CUSTOMER COMPLAINT",
+                    text: "Subject: Urgent problem with tomorrow's conference equipment\nDear Customer Service Team,\nOur conference begins tomorrow at 8:00 a.m., but the equipment delivered this afternoon does not match our order. We ordered two projectors and four wireless microphones. We received both projectors, but neither of them turns on. We tested them using different power sockets. The microphones work correctly, although one has a small mark on its case.\n\nWe need working projectors to display the speakers' presentations to 120 guests. Please arrange replacements by 7:00 a.m. tomorrow so our technicians have time to test them. The mark on the microphone is not urgent. Our immediate concern is the faulty projectors. Please confirm your solution by 5:00 p.m. today.\nRegards, Laura Mendes",
+                    questions: [
+                        { q: "1. What is the most urgent problem?", options: ["A. One microphone has a mark on its case.", "B. The customer received too many microphones.", "C. Neither projector works."], correct: 2 },
+                        { q: "2. Why must the replacements arrive by 7:00 a.m.?", options: ["A. The technicians need time to test them.", "B. The conference finishes at 8:00 a.m.", "C. The speakers arrive at 5:00 p.m."], correct: 0 },
+                        { q: "3. What does Laura request by 5:00 p.m. today?", options: ["A. A refund for all the equipment.", "B. Confirmation of the proposed solution.", "C. Replacement of the marked microphone."], correct: 1 }
+                    ],
+                    clue: "Look at the last paragraph: Laura specifies what is NOT urgent vs. her immediate concern and what she needs by 5:00 p.m."
+                },
+                {
+                    id: 3,
+                    title: "READING 3: REFUND POLICY",
+                    text: "BrightTech allows customers to return unused products within 30 calendar days of delivery. Customers must provide proof of purchase, and all original accessories must be included.\n\nFaulty products reported within the same 30-day period qualify for a full refund or replacement, even if the packaging has been opened. A technician must confirm the fault first. Products damaged through misuse do not qualify for a refund. Delivery charges are refunded only when the product is confirmed to be faulty.\n\nCustomer case: Ms. Rivera received a printer 18 days ago. It has never printed correctly. She has the receipt and all the accessories, but she has already opened the packaging. A company technician has confirmed a manufacturing fault.",
+                    questions: [
+                        { q: "1. What options are available to Ms. Rivera?", options: ["A. A repair only.", "B. A full refund or replacement.", "C. Store credit without a delivery refund."], correct: 1 },
+                        { q: "2. Why does the opened packaging not prevent her return?", options: ["A. Packaging is never required for any return.", "B. She reported the problem after 30 days.", "C. The product has a confirmed fault reported within 30 days."], correct: 2 },
+                        { q: "3. What does the policy say about her delivery charges?", options: ["A. They should be refunded because the printer is faulty.", "B. They cannot be refunded under any circumstances.", "C. They can only be refunded if she accepts a replacement."], correct: 0 }
+                    ],
+                    clue: "Ms. Rivera reported the issue after 18 days (within 30 days) and a technician confirmed a manufacturing fault."
+                },
+                {
+                    id: 4,
+                    title: "READING 4: A TEMPORARY TEAM LEADER",
+                    text: "The customer-support manager will be away for three weeks. A temporary team leader must organize daily schedules, handle difficult complaints, and attend morning planning meetings.\n\nAna has worked in customer support for four years. She has trained new employees and regularly handles serious complaints. She is available throughout the three-week period, but she has limited experience preparing monthly budgets.\n\nBruno has six years of experience in financial administration. He is excellent at budget planning, but he has never supervised customer-support staff. He is also attending an external course every morning during the manager's absence.\n\nThe temporary position does not include budget preparation. The director wants someone who can manage daily customer-support operations without changing the morning meeting schedule.",
+                    questions: [
+                        { q: "1. Which responsibility belongs to the temporary role?", options: ["A. Preparing the annual financial budget.", "B. Teaching an external morning course.", "C. Organizing daily staff schedules."], correct: 2 },
+                        { q: "2. Why is Ana better suited to the immediate requirements?", options: ["A. She has relevant experience and is available for the full period.", "B. She has more financial experience than Bruno.", "C. She can cancel the morning planning meetings."], correct: 0 },
+                        { q: "3. What limits Bruno's suitability?", options: ["A. He has never worked in an office.", "B. He lacks customer-support supervision experience and has morning commitments.", "C. He is unavailable for the entire three weeks."], correct: 1 }
+                    ],
+                    clue: "Notice that budget preparation is NOT required for this temporary role, whereas attending morning meetings IS essential."
+                },
+                {
+                    id: 5,
+                    title: "READING 5: A PROJECT DELAY",
+                    text: "Subject: Website launch update\nThe new company website was scheduled to launch on September 12. The design team completed its work on September 4, and the technical team finished testing the payment system on September 6.\n\nHowever, the client did not approve the final product descriptions until September 10, four days later than agreed. The content team could not upload the descriptions before receiving that approval.\n\nUploading the approved content requires two working days. A final quality check requires one additional day after uploading is complete.\n\nThe project manager has moved the launch to September 15. No extra design work is required, and the payment system does not need further testing. The team will use the additional time to complete the content upload and final check.",
+                    questions: [
+                        { q: "1. What caused the delay?", options: ["A. The design team missed its deadline.", "B. The client approved the descriptions late.", "C. The payment system failed its tests."], correct: 1 },
+                        { q: "2. What must happen immediately after the content is uploaded?", options: ["A. A final quality check.", "B. A new website design.", "C. Another client meeting about prices."], correct: 0 },
+                        { q: "3. What work has already been completed?", options: ["A. The content upload and final quality check.", "B. All tasks required for launch.", "C. The design and payment-system testing."], correct: 2 }
+                    ],
+                    clue: "Look at the timeline: Design (Sept 4) and payment testing (Sept 6) finished on time, but the client delayed approval until Sept 10."
+                },
+                {
+                    id: 6,
+                    title: "READING 6: DELIVERY CONTRACT CONDITIONS",
+                    text: "A medical-equipment company is comparing two delivery contracts for packages that must arrive before clinics open at 9:00 a.m.\n\nContract A costs $12 per package. Deliveries take place between 8:00 a.m. and 6:00 p.m., with no guaranteed arrival time. Tracking is included, but compensation for loss is limited to $100 per package.\n\nContract B costs $18 per package and guarantees delivery before 8:30 a.m. on working days. It includes tracking and requires a recipient's signature. Compensation for loss is available up to $500 per package.\n\nUnder Contract B, the delivery charge is refunded if a package arrives late, except when severe weather causes the delay. Neither contract includes weekend delivery.",
+                    questions: [
+                        { q: "1. Which feature makes Contract B more suitable for these deliveries?", options: ["A. It guarantees arrival before the clinics open.", "B. It includes free weekend delivery.", "C. It does not require anyone to receive the package."], correct: 0 },
+                        { q: "2. What do both contracts include?", options: ["A. The same level of compensation.", "B. Tracking.", "C. Guaranteed morning arrival."], correct: 1 },
+                        { q: "3. When would Contract B's late-delivery refund not apply?", options: ["A. When a recipient signs for the package.", "B. When the package arrives on a working day.", "C. When severe weather causes the delay."], correct: 2 }
+                    ],
+                    clue: "Clinics open at 9:00 a.m. Contract B guarantees delivery before 8:30 a.m."
+                },
+                {
+                    id: 7,
+                    title: "READING 7: A WORKPLACE SAFETY REPORT",
+                    text: "During this morning's inspection, the safety officer recorded three problems.\n\nFirst, several empty boxes are blocking the warehouse emergency exit. The warehouse is operating normally, and 25 employees are currently working inside.\n\nSecond, a chair in an unused meeting room has a loose wheel. The room has been locked, and a warning notice has been placed on the door.\n\nThird, a light in the staff kitchen is not working. Another light provides enough visibility, and maintenance has scheduled a replacement for this afternoon.\n\nThe safety officer has instructed the warehouse supervisor to clear the emergency exit immediately. The damaged chair must be repaired before the meeting room is reopened. The kitchen repair can continue as scheduled.",
+                    questions: [
+                        { q: "1. Which problem requires immediate action?", options: ["A. The broken kitchen light.", "B. The loose wheel on the chair.", "C. The blocked emergency exit."], correct: 2 },
+                        { q: "2. Why is the damaged chair not the first priority?", options: ["A. The room is locked, preventing people from using it.", "B. The chair has already been repaired.", "C. Employees have agreed to use it carefully."], correct: 0 },
+                        { q: "3. What must happen before the meeting room reopens?", options: ["A. The kitchen light must be replaced.", "B. The damaged chair must be repaired.", "C. All warehouse employees must leave."], correct: 1 }
+                    ],
+                    clue: "25 employees are currently working in the warehouse, making the blocked emergency exit an immediate safety hazard."
+                },
+                {
+                    id: 8,
+                    title: "READING 8: A TRAINING BUDGET",
+                    text: "The HR department has $2,000 to organize communication training for 20 employees. The training must include practical activities and take place before the end of the month.\n\nProposal A offers an in-person workshop for $1,800. Materials cost an additional $300. The trainer is available next week.\n\nProposal B offers two live online sessions for a total of $1,600. Digital materials and role-play activities are included. Both sessions can take place this month.\n\nProposal C offers a recorded course for $900, including materials. However, it contains only video lectures and quizzes, with no practical communication activities.\n\nThe HR manager cannot request extra funding. All 20 employees have access to computers and a stable internet connection.",
+                    questions: [
+                        { q: "1. Why does Proposal A exceed the budget?", options: ["A. Its total cost includes an additional materials fee.", "B. Each employee must pay $1,800.", "C. The trainer charges extra for online access."], correct: 0 },
+                        { q: "2. Which proposal meets all the stated requirements?", options: ["A. Proposal A.", "B. Proposal C.", "C. Proposal B."], correct: 2 },
+                        { q: "3. Why does Proposal C fail to meet the requirements?", options: ["A. It is unavailable this month.", "B. It does not include practical communication activities.", "C. It costs more than the available budget."], correct: 1 }
+                    ],
+                    clue: "Calculate Proposal A's total: $1,800 + $300 = $2,100 (over the $2,000 budget). Proposal B costs $1,600 and includes role-plays."
+                },
+                {
+                    id: 9,
+                    title: "READING 9: MEETING MINUTES",
+                    text: "Project: Regional Trade Fair | Meeting date: October 3\nThe team agreed on the following responsibilities:\n\nMarta will confirm the exhibition space with the event organizer by October 6. She must receive written confirmation before the team orders any display materials.\n\nDavid will request three printing quotations by October 8. He should compare prices and delivery times, but he must not place an order yet.\n\nLeila will prepare the first brochure draft by October 9. The sales manager will review it on October 10.\n\nThe team will meet again on October 11 to approve the final brochure and select a printing supplier. Printing can begin only after that approval. Any expected delay must be reported to the project coordinator immediately.",
+                    questions: [
+                        { q: "1. Who must confirm the exhibition space?", options: ["A. Marta.", "B. David.", "C. Leila."], correct: 0 },
+                        { q: "2. What must David complete by October 8?", options: ["A. Print the final brochures.", "B. Request three printing quotations.", "C. Approve the exhibition space."], correct: 1 },
+                        { q: "3. When can printing begin?", options: ["A. As soon as Leila finishes the first draft.", "B. Immediately after David receives one quotation.", "C. After the team approves the brochure and supplier."], correct: 2 }
+                    ],
+                    clue: "Scan each person's name and deadline: Marta (Oct 6), David (Oct 8), Leila (Oct 9), and Team approval (Oct 11)."
+                },
+                {
+                    id: 10,
+                    title: "READING 10: A CANCELLATION CLAUSE",
+                    text: "A conference venue requires all cancellation requests in writing. Cancellations received at least 15 calendar days before the event receive a full refund, minus a $50 administration fee. Cancellations received between 7 and 14 calendar days before the event receive a 50% refund. Cancellations received fewer than 7 calendar days before the event receive no refund.\n\nHowever, customers may transfer the booking to another available date within three months. One date change is permitted at no additional charge.\n\nCustomer case: A company has an event scheduled in five days. Its main speaker is unavailable, so the organizer wants to cancel or postpone. The company has not previously changed the booking and would prefer to avoid losing its payment.",
+                    questions: [
+                        { q: "1. What refund is available if the company cancels now?", options: ["A. A full refund minus $50.", "B. No refund.", "C. A 50% refund."], correct: 1 },
+                        { q: "2. Which option could prevent the company from losing its payment?", options: ["A. Requesting a new available date within three months.", "B. Cancelling by telephone on the event day.", "C. Requesting a full refund after the event."], correct: 0 },
+                        { q: "3. How must the cancellation request be submitted?", options: ["A. Through the speaker.", "B. In person only.", "C. In writing."], correct: 2 }
+                    ],
+                    clue: "The event is in 5 days (fewer than 7 days = no refund), so transferring the date within 3 months is the best option."
+                }
+            ],
+
+            listening: [
+                {
+                    id: 1,
+                    title: "Audio 1: Emergency Evacuation",
+                    script: "Attention all staff. A water leak has been discovered near the electrical room. Please stop working immediately and leave the building calmly. Do not use the elevators and do not exit through the main entrance. All employees must leave through the east emergency exit and meet their team leader in the parking area across the street. Do not return to the building until the safety officer gives permission.",
+                    questions: [
+                        { q: "1. Why must employees leave the building?", options: ["A. A water leak has been discovered near the electrical room.", "B. The parking area is closed.", "C. The main entrance is being repaired."], correct: 0 },
+                        { q: "2. Which exit should employees use?", options: ["A. The main entrance.", "B. The east emergency exit.", "C. The elevators."], correct: 1 },
+                        { q: "3. Where should employees meet their team leader?", options: ["A. Near the electrical room.", "B. Inside the main entrance.", "C. In the parking area across the street."], correct: 2 },
+                        { q: "4. When can employees return to the building?", options: ["A. When the safety officer gives permission.", "B. As soon as they meet their team leader.", "C. When they have collected their belongings."], correct: 0 }
+                    ],
+                    clue: "Listen for the water leak near the electrical room, the east emergency exit, the parking area across the street, and permission from the safety officer."
+                },
+                {
+                    id: 2,
+                    title: "Audio 2: Suspicious Email",
+                    script: "This is an urgent security announcement. Several employees have received a suspicious email asking them to confirm their company password. The email appears to come from Human Resources, but it is a phishing attempt. Do not click the link or reply to the message. Report the suspicious email using the security button in your inbox. If you have already entered your password, call the IT help desk immediately.",
+                    questions: [
+                        { q: "1. What does the suspicious email ask employees to do?", options: ["A. Confirm their holiday dates.", "B. Confirm their company password.", "C. Update their telephone number."], correct: 1 },
+                        { q: "2. Which department does the email appear to come from?", options: ["A. The IT department.", "B. The finance department.", "C. Human Resources."], correct: 2 },
+                        { q: "3. How should employees report the suspicious email?", options: ["A. Use the security button in their inbox.", "B. Reply directly to the message.", "C. Forward their password to Human Resources."], correct: 0 },
+                        { q: "4. What should employees do if they have already entered their password?", options: ["A. Wait for another email.", "B. Call the IT help desk immediately.", "C. Click the link again."], correct: 1 }
+                    ],
+                    clue: "Pay attention to who the email pretends to be (Human Resources), how to report it (security button), and what to do if you already typed your password."
+                },
+                {
+                    id: 3,
+                    title: "Audio 3: Delayed Delivery",
+                    script: "Manager: Hello, I'm calling about our order of thirty office chairs scheduled for today. Supplier: I'm very sorry, our delivery truck has broken down this morning. Manager: We need at least ten chairs before Friday because a training event starts on Thursday. Supplier: We can deliver ten chairs tomorrow morning and the remaining twenty on Friday, and our company will cover the extra delivery cost. Manager: Thank you, that arrangement works for us.",
+                    questions: [
+                        { q: "1. Why is the delivery delayed?", options: ["A. The manager changed the order.", "B. The chairs are unavailable.", "C. The supplier's truck has broken down."], correct: 2 },
+                        { q: "2. Why does the manager need at least ten chairs before Friday?", options: ["A. A training event starts on Thursday.", "B. A new office opens on Friday.", "C. Another supplier will collect them on Thursday."], correct: 0 },
+                        { q: "3. What delivery arrangement do they agree on?", options: ["A. Twenty chairs tomorrow and ten on Friday.", "B. Ten chairs tomorrow and twenty on Friday.", "C. All thirty chairs on Friday."], correct: 1 },
+                        { q: "4. Who will pay the extra delivery cost?", options: ["A. The manager's company.", "B. The training participants.", "C. The supplier."], correct: 2 }
+                    ],
+                    clue: "Listen for why the truck stopped, the Thursday training event, 10 chairs tomorrow + 20 on Friday, and who pays the extra fee."
+                },
+                {
+                    id: 4,
+                    title: "Audio 4: Changing Work Priorities",
+                    script: "Attention team. The sales proposal has become our first priority because the client requested it one day earlier than expected. The internal training report can wait until Friday. For the proposal, Sofia is responsible for reviewing the delivery dates, while Marcus will check the prices. Please send your completed sections to me by two this afternoon.",
+                    questions: [
+                        { q: "1. Why has the sales proposal become the first priority?", options: ["A. The client requested it one day earlier than expected.", "B. The team has already completed the training report.", "C. The original proposal contained incorrect prices."], correct: 0 },
+                        { q: "2. Which task can wait until Friday?", options: ["A. Checking the proposal's prices.", "B. The internal training report.", "C. Reviewing the delivery dates."], correct: 1 },
+                        { q: "3. What is Sofia responsible for?", options: ["A. Preparing the training report.", "B. Checking the prices.", "C. Reviewing the delivery dates."], correct: 2 },
+                        { q: "4. When must team members send their completed sections?", options: ["A. By two this afternoon.", "B. Before noon tomorrow.", "C. By Friday afternoon."], correct: 0 }
+                    ],
+                    clue: "Track each detail: the client requested it one day earlier, the training report waits until Friday, Sofia checks delivery dates, and deadline is 2:00 p.m."
+                },
+                {
+                    id: 5,
+                    title: "Audio 5: Rescheduling a Negotiation",
+                    script: "Assistant: Good morning. The director cannot attend the original nine o'clock meeting because her flight has been delayed. Negotiator: Could we hold an online meeting at eleven instead? Assistant: Yes, eleven online works well. During the rescheduled meeting, we will focus mainly on the payment terms. I will send a new invitation and a shorter agenda shortly.",
+                    questions: [
+                        { q: "1. Why can the director not attend the original meeting?", options: ["A. She has another appointment at noon.", "B. Her flight has been delayed.", "C. She has not received the contract."], correct: 1 },
+                        { q: "2. What arrangement do they agree on?", options: ["A. An in-person meeting at nine.", "B. An in-person meeting at three.", "C. An online meeting at eleven."], correct: 2 },
+                        { q: "3. What will they focus on during the rescheduled meeting?", options: ["A. The payment terms.", "B. The delivery schedule.", "C. The director's travel arrangements."], correct: 0 },
+                        { q: "4. What will the assistant send?", options: ["A. A signed contract and a payment receipt.", "B. A new invitation and a shorter agenda.", "C. A flight confirmation and a delivery schedule."], correct: 1 }
+                    ],
+                    clue: "Listen for the director's flight delay, online at 11, focus on payment terms, and what the assistant emails afterward."
+                },
+                {
+                    id: 6,
+                    title: "Audio 6: Equipment Failure",
+                    script: "Attention production team. Packaging Machine Two is producing damaged boxes. Stop using that machine immediately, and leave the affected boxes in the inspection area. Maintenance staff are on their way. Machine One can continue operating, but customer orders due today must be packaged first. Do not restart Machine Two without approval from maintenance.",
+                    questions: [
+                        { q: "1. What problem has been identified?", options: ["A. Machine One has stopped operating.", "B. Customer orders have been cancelled.", "C. Packaging Machine Two is producing damaged boxes."], correct: 2 },
+                        { q: "2. Where should employees leave the affected boxes?", options: ["A. In the inspection area.", "B. Beside the customer orders ready for delivery.", "C. In the operations manager's office."], correct: 0 },
+                        { q: "3. Which orders must be packaged first?", options: ["A. Orders received before ten thirty.", "B. Customer orders due today.", "C. Orders assigned to Machine Two yesterday."], correct: 1 },
+                        { q: "4. What is required before Machine Two can restart?", options: ["A. Permission from a customer.", "B. Completion of every order.", "C. Approval from maintenance."], correct: 2 }
+                    ],
+                    clue: "Focus on Machine Two's damaged boxes, the inspection area, today's customer orders, and maintenance approval."
+                },
+                {
+                    id: 7,
+                    title: "Audio 7: A Client Changes an Order",
+                    script: "Hello Alex. This is Rachel from GreenMarket. I'm calling about our order for next week's exhibition. We need to increase the number of printed brochures from 300 to 500. However, our budget can only increase by 10%. Could you check whether a simpler paper option would keep the order within budget? Please call me before 3 today. Do not begin printing until we approve the updated price.",
+                    questions: [
+                        { q: "1. How many brochures does Rachel need now?", options: ["A. Five hundred.", "B. Three hundred.", "C. Eight hundred."], correct: 0 },
+                        { q: "2. By how much can the budget increase?", options: ["A. Five percent.", "B. Ten percent.", "C. Twenty percent."], correct: 1 },
+                        { q: "3. What does Rachel suggest to help keep the order within budget?", options: ["A. Reducing the number of brochures.", "B. Cancelling the exhibition.", "C. Using a simpler paper option."], correct: 2 },
+                        { q: "4. What must happen before printing begins?", options: ["A. Rachel must approve the updated price.", "B. Alex must print the original three hundred brochures.", "C. The exhibition must begin."], correct: 0 }
+                    ],
+                    clue: "Listen for the new quantity (500), budget limit (10%), paper suggestion, and final condition before printing."
+                },
+                {
+                    id: 8,
+                    title: "Audio 8: Unexpected Staff Absence",
+                    script: "Supervisor: Luis has called in sick, so we need to adjust today's responsibilities. Emma: I can cover reception this morning, but I'm leading the new employee orientation at one. Supervisor: Thank you, Emma. Cover reception until 12:30. I'll ask Ben to take over after lunch. Emma: Who will prepare the visitor badges? Luis usually does that. Supervisor: I'll prepare them. Please focus on welcoming visitors and answering calls.",
+                    questions: [
+                        { q: "1. Why does the supervisor need to change the team's responsibilities?", options: ["A. Ben is attending a course.", "B. Luis has called in sick.", "C. Emma is leaving the company."], correct: 1 },
+                        { q: "2. Until what time will Emma cover reception?", options: ["A. One o'clock.", "B. Two o'clock.", "C. Twelve thirty."], correct: 2 },
+                        { q: "3. What is Emma doing at one o'clock?", options: ["A. Leading the new employee orientation.", "B. Preparing the visitor badges.", "C. Taking over reception from Ben."], correct: 0 },
+                        { q: "4. Who will prepare the visitor badges?", options: ["A. Ben.", "B. The supervisor.", "C. Emma."], correct: 1 }
+                    ],
+                    clue: "Track who is sick (Luis), Emma's schedule (12:30 reception, 1:00 orientation), and who makes the badges (the supervisor)."
+                },
+                {
+                    id: 9,
+                    title: "Audio 9: Missing Access Badge",
+                    script: "Employee: Good morning. I can't find my access badge, and I have a meeting upstairs in 20 minutes. Security: When did you last use it? Employee: Yesterday afternoon. I may have lost it on the bus. Security: I'll deactivate it now. Please show me another form of identification so I can issue a temporary badge. Employee: Can I use the temporary badge all week? Security: No, it is only valid today. Contact Human Resources to request a replacement.",
+                    questions: [
+                        { q: "1. Where does the employee think the badge may have been lost?", options: ["A. In the meeting room.", "B. At the reception desk.", "C. On the bus."], correct: 2 },
+                        { q: "2. What will the security officer do to the original badge?", options: ["A. Deactivate it.", "B. Renew it for another week.", "C. Give it to Human Resources."], correct: 0 },
+                        { q: "3. What must the employee show to receive a temporary badge?", options: ["A. A meeting invitation.", "B. Another form of identification.", "C. A replacement request from Human Resources."], correct: 1 },
+                        { q: "4. How long is the temporary badge valid?", options: ["A. All week.", "B. For twenty minutes.", "C. Only today."], correct: 2 }
+                    ],
+                    clue: "Listen for where it was lost (bus), what happens to the old badge (deactivated), what ID is required, and how long the temporary badge lasts."
+                },
+                {
+                    id: 10,
+                    title: "Audio 10: Unexpected Office Closure",
+                    script: "This is a message for all staff. Our office will remain closed tomorrow because of urgent building repairs. Employees who have company laptops should work from home. If your equipment is still in the office, contact your supervisor today to arrange an alternative task. Do not enter the building tomorrow. Client appointments should be moved online where possible. We will send an update by 4 tomorrow afternoon about the following day.",
+                    questions: [
+                        { q: "1. Why will the office remain closed tomorrow?", options: ["A. Urgent building repairs are needed.", "B. All employees are attending a conference.", "C. The company is moving to another office."], correct: 0 },
+                        { q: "2. What should employees do if their equipment is still in the office?", options: ["A. Enter the building tomorrow to collect it.", "B. Contact their supervisor today to arrange an alternative task.", "C. Wait until the office reopens before contacting anyone."], correct: 1 },
+                        { q: "3. What should happen to client appointments where possible?", options: ["A. They should be cancelled permanently.", "B. They should take place inside the closed office.", "C. They should be moved online."], correct: 2 },
+                        { q: "4. When will staff receive an update about the following day?", options: ["A. By four tomorrow afternoon.", "B. Before the office closes today.", "C. Tomorrow morning before work begins."], correct: 0 }
+                    ],
+                    clue: "Focus on urgent building repairs, contacting the supervisor today, moving appointments online, and the 4:00 p.m. update tomorrow."
+                }
+            ],
+
+            writing: [
+                {
+                    id: 1,
+                    title: "VIP Mail 1: Correcting a Quotation Price Error",
+                    situation: "You sent a price quotation to a client with an incorrect unit price ($95 instead of $85 per unit for 50 units). Write a polite professional email (60–90 words) apologizing for the mistake, providing the corrected total ($4,250), and attaching the updated quote.",
+                    requiredKeywords: ["apologize", "quotation", "price", "error", "updated", "regards"],
+                    clue: "Include a formal greeting (Dear...), state the wrong vs. correct price clearly, keep between 60-90 words, and add a professional closing (Best regards,)."
+                },
+                {
+                    id: 2,
+                    title: "VIP Mail 2: Requesting Missing Items from a Shipment",
+                    situation: "Your company received an order of 100 wireless headsets, but 15 headsets are missing from the boxes. Write a formal email (60–90 words) to the supplier reporting the shortage, referencing Order #408, and requesting immediate delivery.",
+                    requiredKeywords: ["order", "missing", "shipment", "items", "delivery", "regards"],
+                    clue: "Mention the exact number of missing items (15), the order number (#408), and request a delivery date."
+                },
+                {
+                    id: 3,
+                    title: "VIP Mail 3: Requesting Additional Staff for a Project",
+                    situation: "Your team is handling a major product launch next month and the current workload is too heavy. Write an email (60–90 words) to your manager explaining why two temporary assistants are needed and how this will protect the deadline.",
+                    requiredKeywords: ["project", "workload", "staff", "deadline", "support", "regards"],
+                    clue: "Use persuasive B1+/B2 connectors like 'Due to the increased workload...' and 'In order to meet our deadline...'"
+                },
+                {
+                    id: 4,
+                    title: "VIP Mail 4: Sending a Polite Payment Reminder",
+                    situation: "Invoice #892 for $2,400 was due five days ago and remains unpaid. Write a courteous payment reminder email (60–90 words) to the client asking them to confirm the payment status or settle the balance this week.",
+                    requiredKeywords: ["invoice", "payment", "overdue", "balance", "confirm", "regards"],
+                    clue: "Keep a polite, professional tone: 'We would like to remind you that Invoice #892 was due on...'"
+                },
+                {
+                    id: 5,
+                    title: "VIP Mail 5: Informing Clients of a Service Interruption",
+                    situation: "Your online platform will undergo scheduled maintenance this Sunday from 2:00 a.m. to 6:00 a.m. Write a clear notice email (60–90 words) informing clients of the temporary interruption and apologizing for any inconvenience.",
+                    requiredKeywords: ["maintenance", "service", "Sunday", "unavailable", "inconvenience", "regards"],
+                    clue: "State the exact day and hours clearly, and use the standard B2 phrase 'We apologize for any inconvenience this may cause.'"
+                },
+                {
+                    id: 6,
+                    title: "VIP Mail 6: Proposing a Compromise After a Rejected Offer",
+                    situation: "A potential client rejected your initial service proposal because it exceeded their budget by 12%. Write a professional email (60–90 words) proposing a revised package that removes non-essential add-ons to fit their budget.",
+                    requiredKeywords: ["proposal", "budget", "revised", "offer", "terms", "regards"],
+                    clue: "Show flexibility: 'Following your feedback regarding the budget, we would like to propose a revised option...'"
+                },
+                {
+                    id: 7,
+                    title: "VIP Mail 7: Reporting Incorrect Figures in a Report",
+                    situation: "You noticed that the Q3 Sales Report distributed this morning contains incorrect revenue figures for the Northern Region. Write an urgent email (60–90 words) to your supervisor flagging the error and stating when the corrected file will be sent.",
+                    requiredKeywords: ["report", "figures", "error", "correct", "updated", "regards"],
+                    clue: "Be transparent and proactive: specify which section has the error and confirm the exact time you will send the revised version."
+                },
+                {
+                    id: 8,
+                    title: "VIP Mail 8: Resolving a Business Travel Booking Error",
+                    situation: "The travel agency booked your director's flight for October 14 instead of October 12. Write an urgent email (60–90 words) requesting an immediate date change so the director arrives in time for the conference.",
+                    requiredKeywords: ["booking", "flight", "date", "change", "conference", "regards"],
+                    clue: "Clearly contrast the wrong date (Oct 14) with the required date (Oct 12) and ask for confirmation."
+                },
+                {
+                    id: 9,
+                    title: "VIP Mail 9: Explaining the Limits of a Contracted Service",
+                    situation: "A client is asking for free weekend on-site technical support, which is not covered by their Standard Plan. Write a polite email (60–90 words) explaining what their current contract includes and offering an upgrade option.",
+                    requiredKeywords: ["contract", "support", "included", "plan", "upgrade", "regards"],
+                    clue: "Refer politely to the agreement: 'According to your current service plan, weekend on-site support is not included; however...'"
+                },
+                {
+                    id: 10,
+                    title: "VIP Mail 10: Proposing How to Prevent a Recurring Error",
+                    situation: "Several orders were shipped to outdated customer addresses this month. Write an email (60–90 words) to your team leader proposing a mandatory address-verification step before dispatching packages.",
+                    requiredKeywords: ["error", "address", "prevent", "process", "check", "regards"],
+                    clue: "Use problem-solving vocabulary: 'To prevent this issue from recurring, I propose implementing a verification step...'"
+                }
+            ],
+
+            final: [
+                {
+                    id: 1,
+                    title: "Challenge 1: Requesting a Discount",
+                    instruction: "Complete the sentence with ONE word.",
+                    situation: "You are negotiating a lower price with a supplier.",
+                    prompt: '"Could you ______ us a discount on this order?"',
+                    answers: ["offer", "give"],
+                    clue: "Common collocation with 'a discount': g_ _ _ or o_ _ _ _."
+                },
+                {
+                    id: 2,
+                    title: "Challenge 2: Reporting a Problem",
+                    instruction: "Write the corrected full sentence.",
+                    situation: "Your team discovers a serious problem and needs to notify the manager.",
+                    prompt: '"We must to inform the manager."',
+                    answers: ["we must inform the manager", "we must inform the manager."],
+                    clue: "Modal verbs like 'must' are followed by the base verb WITHOUT 'to'."
+                },
+                {
+                    id: 3,
+                    title: "Challenge 3: Reducing Costs",
+                    instruction: "Complete the first conditional with ONE word.",
+                    situation: "Your team is discussing how to save money.",
+                    prompt: '"If we reduce costs, we ______ save money."',
+                    answers: ["will"],
+                    clue: "First conditional structure: If + present simple, subject + w_ _ _ + base verb."
+                },
+                {
+                    id: 4,
+                    title: "Challenge 4: Requesting More Time",
+                    instruction: "Complete the sentence with the correct word.",
+                    situation: "Your team cannot finish a project by the deadline and needs more time.",
+                    prompt: '"We need to request an ______ to complete the project."',
+                    answers: ["extension"],
+                    clue: "Noun derived from 'extend' (starts with 'ex...', used after 'an')."
+                },
+                {
+                    id: 5,
+                    title: "Challenge 5: Reaching an Agreement",
+                    instruction: "Complete the expression with ONE word.",
+                    situation: "Two companies are negotiating and need to agree on the conditions.",
+                    prompt: '"Both sides must reach an ______ before signing the contract."',
+                    answers: ["agreement"],
+                    clue: "Noun form of the verb 'agree' (starts with 'a...', used after 'an')."
+                }
+            ]
+        };
+
+        /* -------------------------------------------------------------------
+           3. ESTADO DE LA APLICACIÓN Y TEMPORIZADOR DE 7 MINUTOS
+        ------------------------------------------------------------------- */
+        let currentStation = null;
+        let currentCardIndex = 0; // 0 a 9 (Cartas 1 a 10)
+        let currentPage = 0; // Paginación horizontal/por pasos (0 o 1) para CERO SCROLL
+        let timerInterval = null;
+        let timeRemaining = 7 * 60; // 7 minutos = 420 segundos
+
+        // Respuestas del usuario en la sesión actual
+        let userAnswers = {
+            speakingTranscript: "",
+            readingChoices: [null, null, null],
+            listeningChoices: [null, null, null, null],
+            writingText: "",
+            finalAnswers: ["", "", "", "", ""]
+        };
+
+        // Control de bloqueo: No permite cambiar de skill hasta completar la actual
+        let stationLocked = false;
+        let isRecording = false;
+        let customAudioUrl = null;
+        let activeAudioElement = null;
+        let audioPlaybackState = 'stopped'; // 'stopped' | 'playing' | 'paused'
+        let recognition = null;
+
+        /* -------------------------------------------------------------------
+           4. INITIALIZATION OF BUBBLES & AVATARS
+        ------------------------------------------------------------------- */
+        function toggleFullScreen() {
+            const icon = document.getElementById('fullscreen-icon');
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().then(() => {
+                    if (icon) icon.className = 'fa-solid fa-compress';
+                }).catch(() => {});
+            } else {
+                document.exitFullscreen().then(() => {
+                    if (icon) icon.className = 'fa-solid fa-expand';
+                }).catch(() => {});
+            }
+        }
+
+        document.addEventListener('fullscreenchange', () => {
+            const icon = document.getElementById('fullscreen-icon');
+            if (!icon) return;
+            icon.className = document.fullscreenElement ? 'fa-solid fa-compress' : 'fa-solid fa-expand';
+        });
+
+        function detectDeviceAndAdapt() {
+            const badge = document.getElementById('device-mode-badge');
+            const leaderWrapper = document.getElementById('leader-claim-wrapper');
+            const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+
+            if (badge) {
+                if (isMobileDevice) {
+                    badge.innerHTML = '<i class="fa-solid fa-mobile-screen-button text-sky-400"></i> Mobile View (9:16) • Player Ready';
+                } else {
+                    badge.innerHTML = '<i class="fa-solid fa-laptop text-emerald-400"></i> Desktop View (3:2) • Player & Leader Ready';
+                }
+            }
+
+            if (leaderWrapper && isMobileDevice) {
+                leaderWrapper.classList.remove('md:block');
+                leaderWrapper.classList.add('hidden');
+            }
+        }
+
+        window.addEventListener('resize', detectDeviceAndAdapt);
+
+        window.onload = function () {
+            createBubbles();
+            renderAvatarGrid();
+            populateCardSelector();
+            initSpeechRecognition();
+            detectDeviceAndAdapt();
+
+            // If joined via Leader's QR code (?mode=player), hide Leader option immediately & prefill Room Code
+            const params = new URLSearchParams(window.location.search);
+            const scannedCode = params.get('code');
+            const codeInput = document.getElementById('player-room-code-input');
+            if (scannedCode && codeInput) {
+                codeInput.value = scannedCode.toUpperCase();
+            }
+            if (params.get('mode') === 'player') {
+                const wrapper = document.getElementById('leader-claim-wrapper');
+                if (wrapper) {
+                    wrapper.classList.remove('md:block');
+                    wrapper.classList.add('hidden');
+                }
+            }
+        };
+
+        function createBubbles() {
+            const container = document.getElementById('bubbles-container');
+            for (let i = 0; i < 18; i++) {
+                const b = document.createElement('div');
+                b.className = 'bubble';
+                const size = Math.random() * 24 + 8;
+                b.style.width = `${size}px`;
+                b.style.height = `${size}px`;
+                b.style.left = `${Math.random() * 100}%`;
+                b.style.animationDuration = `${Math.random() * 10 + 8}s`;
+                b.style.animationDelay = `${Math.random() * 6}s`;
+                container.appendChild(b);
+            }
+        }
+
+        function renderAvatarGrid() {
+            const grid = document.getElementById('avatar-grid');
+            grid.innerHTML = '';
+
+            // Asegurar que el avatar seleccionado por defecto no esté usado
+            if (usedAvatars.has(selectedAvatarId)) {
+                const free = AVATARS.find(a => !usedAvatars.has(a.id));
+                selectedAvatarId = free ? free.id : null;
+            }
+
+            AVATARS.forEach(av => {
+                const isTaken = usedAvatars.has(av.id);
+                const isSelected = selectedAvatarId === av.id && !isTaken;
+
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.disabled = isTaken;
+                btn.title = isTaken ? `${av.name} (Already taken!)` : av.name;
+                btn.className = `relative h-10 sm:h-11 rounded-xl flex items-center justify-center text-xl sm:text-2xl transition border-2 ${
+                    isTaken
+                        ? 'bg-slate-900/40 border-slate-700 opacity-35 cursor-not-allowed'
+                        : isSelected
+                            ? 'bg-amber-400/30 border-amber-400 scale-105 shadow-[0_0_12px_rgba(251,191,36,0.6)] cursor-pointer'
+                            : 'bg-slate-900/80 border-slate-700 hover:border-sky-400 cursor-pointer'
+                }`;
+                btn.innerHTML = `<span>${av.icon}</span>${isTaken ? '<span class="absolute -top-1 -right-1 text-[10px] bg-red-600 text-white rounded-full px-1">🔒</span>' : ''}`;
+
+                if (!isTaken) {
+                    btn.onclick = () => {
+                        selectedAvatarId = av.id;
+                        renderAvatarGrid();
+                    };
+                }
+                grid.appendChild(btn);
+            });
+        }
+
+        function startGame() {
+            const nameInput = document.getElementById('player-name-input').value.trim();
+            const errBox = document.getElementById('welcome-error');
+
+            if (!nameInput || !selectedAvatarId || usedAvatars.has(selectedAvatarId)) {
+                errBox.classList.remove('hidden');
+                return;
+            }
+
+            errBox.classList.add('hidden');
+            const avatarObj = AVATARS.find(a => a.id === selectedAvatarId);
+            usedAvatars.add(selectedAvatarId); // Lock this avatar so it cannot be repeated
+
+            currentPlayer = {
+                name: nameInput,
+                avatar: avatarObj.icon,
+                chips: 3,
+                completed: { speaking: false, listening: false, writing: false, reading: false, final: false }
+            };
+            currentStation = null;
+            stationLocked = false;
+
+            // Update HUD
+            document.getElementById('hud-name').textContent = currentPlayer.name;
+            document.getElementById('hud-avatar').textContent = currentPlayer.avatar;
+            updateChipsDisplay();
+            updateStationBadges();
+            updateStationLockUI();
+
+            // Screen transition
+            document.getElementById('welcome-screen').classList.add('hidden');
+            document.getElementById('app-screen').classList.remove('hidden');
+
+            if (window.syncPlayerStateToCloud) {
+                window.syncPlayerStateToCloud(`Entered Jackpot Casino with ${avatarObj.name}`);
+            }
+        }
+
+        function updateChipsDisplay() {
+            const hudChips = document.getElementById('hud-chips');
+            if (hudChips) {
+                hudChips.textContent = `${currentPlayer.chips} Chip${currentPlayer.chips === 1 ? '' : 's'}`;
+            }
+        }
+
+        function updateStationBadges() {
+            const stations = ['speaking', 'listening', 'writing', 'reading', 'final'];
+            stations.forEach(st => {
+                const badge = document.getElementById(`badge-${st}`);
+                if (!badge) return;
+                if (currentPlayer.completed[st]) {
+                    badge.innerHTML = '<i class="fa-solid fa-circle-check text-emerald-500"></i>';
+                } else if (stationLocked && currentStation && currentStation !== st) {
+                    badge.innerHTML = '<i class="fa-solid fa-lock text-slate-400"></i>';
+                } else if (st === 'final') {
+                    badge.innerHTML = '<i class="fa-solid fa-crown"></i>';
+                } else {
+                    badge.innerHTML = '<i class="fa-regular fa-circle"></i>';
+                }
+            });
+        }
+
+        function changeCardNumber(val) {
+            if (stationLocked) return;
+            currentCardIndex = parseInt(val, 10) || 0;
+            currentPage = 0;
+            resetUserAnswers();
+            renderWorkspace();
+        }
+
+        function switchPlayerModal() {
+            stopTimer();
+            stopAllListeningAudio();
+            stopRecordingIfActive();
+            stationLocked = false;
+            currentStation = null;
+            document.getElementById('app-screen').classList.add('hidden');
+            document.getElementById('welcome-screen').classList.remove('hidden');
+            document.getElementById('player-name-input').value = '';
+            renderAvatarGrid();
+        }
+
+        function updateStationLockUI() {
+            const allStations = ['speaking', 'listening', 'writing', 'reading', 'final'];
+            allStations.forEach(st => {
+                const navBtn = document.getElementById(`nav-${st}`);
+                if (!navBtn) return;
+                const isOtherLocked = stationLocked && currentStation && currentStation !== st;
+                if (isOtherLocked) {
+                    navBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                    navBtn.classList.remove('cursor-pointer', 'hover:bg-white');
+                } else {
+                    navBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                    navBtn.classList.add('cursor-pointer');
+                    if (st !== 'final') navBtn.classList.add('hover:bg-white');
+                }
+            });
+
+            const cardSel = document.getElementById('card-selector');
+            if (cardSel) {
+                cardSel.disabled = stationLocked;
+                cardSel.title = stationLocked ? 'Complete this card before switching cards' : 'Select card number';
+            }
+            updateStationBadges();
+        }
+
+        function populateCardSelector() {
+            const sel = document.getElementById('card-selector');
+            sel.innerHTML = '';
+            for (let i = 1; i <= 10; i++) {
+                const opt = document.createElement('option');
+                opt.value = i - 1;
+                opt.textContent = `Card ${i}`;
+                opt.className = 'bg-slate-900 text-white';
+                sel.appendChild(opt);
+            }
+        }
+
+        /* -------------------------------------------------------------------
+           5. STATION NAVIGATION & 7-MINUTE TIMER
+        ------------------------------------------------------------------- */
+        function selectStation(station) {
+            // Prevent switching skills while an active station is incomplete
+            if (stationLocked && currentStation && currentStation !== station) {
+                setBotState(
+                    'STATION LOCKED',
+                    '🔒',
+                    `<p class="text-red-400 font-bold">You cannot switch stations yet!</p>
+                     <p>Complete your current <strong>${currentStation.toUpperCase()}</strong> activity and pass the Ace Bot scan before moving to another skill.</p>`
+                );
+                return;
+            }
+
+            stopAllListeningAudio();
+            stopRecordingIfActive();
+
+            currentStation = station;
+            stationLocked = true; // Lock switching until this station is completed
+            currentCardIndex = 0;
+            currentPage = 0;
+            customAudioUrl = null;
+            resetUserAnswers();
+            updateStationLockUI();
+
+            // Resaltar botón activo en el menú lateral
+            document.querySelectorAll('.station-btn').forEach(btn => btn.classList.remove('ring-4', 'ring-amber-400'));
+            const activeBtn = document.getElementById(`nav-${station}`);
+            if (activeBtn) activeBtn.classList.add('ring-4', 'ring-amber-400');
+
+            // Ocultar cartel de "Choose Next Station" al iniciar nueva estación
+            document.getElementById('choose-next-banner').classList.add('hidden');
+            const roundBox = document.getElementById('player-round-complete-box');
+            if (roundBox) roundBox.classList.add('hidden');
+            setBotState('READY', '♠️', `You entered <strong>${station.toUpperCase()}</strong>! Complete the activity before the 7-minute timer runs out, then press <strong>Done</strong>.`);
+
+            // Configurar cabecera
+            const controls = document.getElementById('station-controls');
+            const cardSel = document.getElementById('card-selector');
+            cardSel.value = 0;
+
+            if (station === 'final') {
+                controls.classList.remove('hidden');
+                cardSel.parentElement.classList.add('hidden');
+                document.getElementById('station-title').textContent = 'Final Jackpot: Grammar & Vocabulary';
+                document.getElementById('station-subtitle').textContent = '5 Quick Executive Challenges • Complete all 5 to win!';
+                document.getElementById('station-icon-box').textContent = '🏆';
+                startTimer(7 * 60);
+            } else {
+                controls.classList.remove('hidden');
+                cardSel.parentElement.classList.remove('hidden');
+                const meta = {
+                    speaking: { title: 'Speaking: Poker Interview', sub: 'Speak into your microphone to resolve the situation (B1+/B2)', icon: '🎙️' },
+                    listening: { title: 'Listening: Roulette Announcements', sub: 'Listen carefully to the audio and answer without transcripts', icon: '🎧' },
+                    writing: { title: 'Writing: VIP Mail', sub: 'Write a professional email (60–90 words) with greeting & closing', icon: '✍️' },
+                    reading: { title: 'Reading: Blackjack Job Match', sub: 'Read the business document and answer the 3 questions', icon: '📖' }
+                }[station];
+                document.getElementById('station-title').textContent = meta.title;
+                document.getElementById('station-subtitle').textContent = meta.sub;
+                document.getElementById('station-icon-box').textContent = meta.icon;
+                startTimer(7 * 60); // Activar contador de 7 minutos
+            }
+
+            if (window.syncPlayerStateToCloud) {
+                window.syncPlayerStateToCloud(`Started ${station.toUpperCase()}${station !== 'final' ? ' (Card #1)' : ''}`);
+            }
+
+            renderWorkspace();
+        }
+
+        function resetUserAnswers() {
+            userAnswers = {
+                speakingTranscript: "",
+                readingChoices: [null, null, null],
+                listeningChoices: [null, null, null, null],
+                writingText: "",
+                finalAnswers: ["", "", "", "", ""]
+            };
+        }
+
+        function startTimer(seconds) {
+            stopTimer();
+            timeRemaining = seconds;
+            updateTimerUI();
+            timerInterval = setInterval(() => {
+                timeRemaining--;
+                updateTimerUI();
+                if (timeRemaining <= 0) {
+                    stopTimer();
+                    setBotState('TIME UP', '⏰', 'Time is up! Let me scan your current progress right now...');
+                    handleDoneClick(true);
+                }
+            }, 1000);
+        }
+
+        function stopTimer() {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
+        }
+
+        function updateTimerUI() {
+            const mins = Math.floor(Math.max(0, timeRemaining) / 60);
+            const secs = Math.max(0, timeRemaining) % 60;
+            const display = document.getElementById('timer-display');
+            display.textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+            if (timeRemaining <= 60) {
+                display.classList.add('text-red-400', 'animate-pulse');
+            } else {
+                display.classList.remove('text-red-400', 'animate-pulse');
+            }
+        }
+
+        /* -------------------------------------------------------------------
+           6. RENDERIZADO DE ACTIVIDADES (PAGINADAS CON NEXT - CERO SCROLL)
+        ------------------------------------------------------------------- */
+        function renderWorkspace() {
+            const ws = document.getElementById('station-workspace');
+            const footer = document.getElementById('station-footer');
+            const stepInd = document.getElementById('step-indicator');
+            const prevBtn = document.getElementById('prev-page-btn');
+            const nextBtn = document.getElementById('next-page-btn');
+
+            if (currentStation === 'speaking') {
+                const item = GAME_DATA.speaking[currentCardIndex];
+                footer.classList.add('hidden'); // Cabe perfectamente en una vista sin scroll
+
+                ws.innerHTML = `
+                    <div class="flex flex-col justify-between h-full gap-2">
+                        <div class="bg-slate-900/90 border border-red-500/40 rounded-2xl p-3.5">
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="text-xs font-extrabold uppercase tracking-wider text-red-400">Card #${item.id} • ${item.title}</span>
+                                <span class="text-[11px] bg-red-950 text-red-200 px-2.5 py-0.5 rounded-full border border-red-500/30">${item.roleA}</span>
+                            </div>
+                            <p class="text-xs md:text-sm text-white leading-relaxed">${item.situation}</p>
+                        </div>
+
+                        <!-- Zona de Grabación de Voz Obligatoria -->
+                        <div class="flex-1 bg-slate-950/85 border border-slate-700 rounded-2xl p-3 flex flex-col items-center justify-center text-center gap-2">
+                            <button onclick="toggleSpeechRecording()" id="mic-btn"
+                                class="w-16 h-16 rounded-full bg-gradient-to-br from-red-600 to-rose-700 hover:from-red-500 hover:to-rose-600 text-white text-2xl flex items-center justify-center shadow-lg transition cursor-pointer">
+                                <i class="fa-solid fa-microphone"></i>
+                            </button>
+                            <p id="mic-status" class="text-xs font-bold text-amber-300">Click the microphone and speak in English (B1+/B2) to solve the situation</p>
+
+                            <div class="w-full max-w-xl bg-slate-900/90 border border-slate-700 rounded-xl p-2.5 text-left">
+                                <div class="flex justify-between items-center mb-1">
+                                    <span class="text-[10px] font-bold uppercase text-sky-400">Live Speech-to-Text Capture:</span>
+                                    <button onclick="clearTranscript()" class="text-[10px] text-slate-400 hover:text-white underline cursor-pointer">Clear</button>
+                                </div>
+                                <textarea id="speaking-transcript-box" rows="2" placeholder="Your spoken English will appear here automatically..."
+                                    oninput="userAnswers.speakingTranscript = this.value"
+                                    class="w-full bg-transparent text-xs md:text-sm text-emerald-300 font-medium focus:outline-none resize-none">${userAnswers.speakingTranscript}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            else if (currentStation === 'reading') {
+                const item = GAME_DATA.reading[currentCardIndex];
+                footer.classList.remove('hidden');
+                stepInd.textContent = currentPage === 0 ? 'Page 1 of 2: Business Text' : 'Page 2 of 2: Comprehension Questions';
+                prevBtn.disabled = currentPage === 0;
+                nextBtn.disabled = currentPage === 1;
+
+                if (currentPage === 0) {
+                    // Página 1: Solo lectura limpia sin scroll
+                    ws.innerHTML = `
+                        <div class="bg-slate-900/95 border border-blue-500/40 rounded-2xl p-4 md:p-5 h-full flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-xs md:text-sm font-extrabold uppercase text-sky-300">${item.title}</span>
+                                    <span class="text-[11px] bg-blue-950 text-sky-200 px-2.5 py-0.5 rounded-full border border-blue-400/30">Read carefully, then click Next</span>
+                                </div>
+                                <div class="text-xs md:text-sm text-slate-100 leading-relaxed whitespace-pre-line bg-slate-950/70 p-3.5 rounded-xl border border-slate-800">
+                                    ${item.text}
+                                </div>
+                            </div>
+                            <p class="text-[11px] text-amber-300 text-right font-semibold">Ready for the questions? Click <strong>Next →</strong> below.</p>
+                        </div>
+                    `;
+                } else {
+                    // Página 2: Las 3 preguntas de opción múltiple
+                    ws.innerHTML = `
+                        <div class="grid grid-cols-1 gap-2.5 h-full content-center">
+                            ${item.questions.map((qObj, qIdx) => `
+                                <div class="bg-slate-900/90 border border-slate-700 rounded-xl p-2.5">
+                                    <p class="text-xs font-bold text-amber-300 mb-1.5">${qObj.q}</p>
+                                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-1.5">
+                                        ${qObj.options.map((opt, oIdx) => {
+                                            const selected = userAnswers.readingChoices[qIdx] === oIdx;
+                                            return `
+                                                <button onclick="selectReadingOption(${qIdx}, ${oIdx})"
+                                                    class="text-left text-[11px] p-2 rounded-lg border transition cursor-pointer ${
+                                                        selected
+                                                            ? 'bg-sky-600/40 border-amber-400 text-white font-bold'
+                                                            : 'bg-slate-950/80 border-slate-700 text-slate-300 hover:border-sky-400'
+                                                    }">
+                                                    ${opt}
+                                                </button>
+                                            `;
+                                        }).join('')}
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                }
+            }
+
+            else if (currentStation === 'listening') {
+                const item = GAME_DATA.listening[currentCardIndex];
+                footer.classList.remove('hidden'); // Paginated into 2 steps (Q1-Q2 and Q3-Q4) for zero scrolling
+                stepInd.textContent = currentPage === 0 ? 'Questions 1 & 2 of 4' : 'Questions 3 & 4 of 4';
+                prevBtn.disabled = currentPage === 0;
+                nextBtn.disabled = currentPage === 1;
+
+                const startQ = currentPage * 2;
+                const visibleQuestions = item.questions.slice(startQ, startQ + 2);
+
+                const isPlaying = audioPlaybackState === 'playing';
+                const isPaused = audioPlaybackState === 'paused';
+
+                ws.innerHTML = `
+                    <div class="flex flex-col justify-between h-full gap-2.5">
+                        <!-- Audio Player with Play, Pause & Restart (No transcript shown per game rules) -->
+                        <div class="bg-slate-900/95 border border-gray-400/40 rounded-2xl p-3 flex flex-col sm:flex-row items-center justify-between gap-2">
+                            <div class="flex items-center gap-2.5">
+                                <button onclick="toggleListeningAudio()" id="play-audio-btn" title="${isPlaying ? 'Pause Audio' : 'Play / Resume Audio'}"
+                                    class="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-400 to-yellow-600 hover:from-amber-300 hover:to-yellow-500 text-slate-950 text-lg flex items-center justify-center shadow-lg cursor-pointer transition transform active:scale-95 ${isPlaying ? 'animate-pulse' : ''}">
+                                    <i id="play-audio-icon" class="fa-solid ${isPlaying ? 'fa-pause' : 'fa-play'}"></i>
+                                </button>
+                                <button onclick="restartListeningAudio()" title="Restart Audio from Beginning"
+                                    class="w-9 h-9 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-600 text-amber-300 text-xs flex items-center justify-center cursor-pointer transition">
+                                    <i class="fa-solid fa-rotate-left"></i>
+                                </button>
+                                <div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="text-xs font-extrabold uppercase text-gray-200">Card #${item.id} • ${item.title}</span>
+                                        <span id="audio-state-badge" class="text-[10px] font-bold px-2 py-0.5 rounded-full ${isPlaying ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-400/40' : isPaused ? 'bg-amber-500/20 text-amber-300 border border-amber-400/40' : 'bg-slate-800 text-slate-400'}">
+                                            ${isPlaying ? 'Playing' : isPaused ? 'Paused' : 'Ready'}
+                                        </span>
+                                    </div>
+                                    <p class="text-[11px] text-sky-300">Play or pause the audio anytime and answer all 4 questions (use <strong>Next</strong> for Q3 & Q4).</p>
+                                </div>
+                            </div>
+
+                            <!-- Option to load local MP3/WAV file during live sessions -->
+                            <label class="text-[10px] bg-slate-800 hover:bg-slate-700 text-slate-300 px-2.5 py-1.5 rounded-lg border border-slate-600 cursor-pointer flex items-center gap-1 flex-shrink-0">
+                                <i class="fa-solid fa-folder-open text-amber-400"></i> Load Local Audio
+                                <input type="file" accept="audio/*" onchange="loadLocalAudioFile(event)" class="hidden">
+                            </label>
+                        </div>
+
+                        <!-- Paginated Questions (2 per page to prevent scrolling) -->
+                        <div class="flex-1 grid grid-cols-1 gap-2 content-center">
+                            ${visibleQuestions.map((qObj, idxOffset) => {
+                                const qIdx = startQ + idxOffset;
+                                return `
+                                    <div class="bg-slate-900/90 border border-slate-700 rounded-xl p-2.5">
+                                        <p class="text-xs font-bold text-amber-300 mb-1.5">${qObj.q}</p>
+                                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-1.5">
+                                            ${qObj.options.map((opt, oIdx) => {
+                                                const selected = userAnswers.listeningChoices[qIdx] === oIdx;
+                                                return `
+                                                    <button onclick="selectListeningOption(${qIdx}, ${oIdx})"
+                                                        class="text-left text-[11px] p-2 rounded-lg border transition cursor-pointer ${
+                                                            selected
+                                                                ? 'bg-amber-500/30 border-amber-400 text-white font-bold shadow'
+                                                                : 'bg-slate-950/80 border-slate-700 text-slate-200 hover:border-sky-400'
+                                                        }">
+                                                        ${opt}
+                                                    </button>
+                                                `;
+                                            }).join('')}
+                                        </div>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+
+            else if (currentStation === 'writing') {
+                const item = GAME_DATA.writing[currentCardIndex];
+                footer.classList.add('hidden');
+                const wordCount = countWords(userAnswers.writingText);
+
+                ws.innerHTML = `
+                    <div class="flex flex-col justify-between h-full gap-2.5">
+                        <div class="bg-slate-900/95 border border-emerald-500/40 rounded-2xl p-3">
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="text-xs font-extrabold uppercase text-emerald-400">${item.title}</span>
+                                <span class="text-[11px] bg-emerald-950 text-emerald-200 px-2.5 py-0.5 rounded-full border border-emerald-500/30">Target: 60–90 words</span>
+                            </div>
+                            <p class="text-xs text-slate-200 leading-relaxed">${item.situation}</p>
+                        </div>
+
+                        <div class="flex-1 bg-slate-950/90 border border-slate-700 rounded-2xl p-3 flex flex-col">
+                            <div class="flex justify-between items-center text-[11px] text-slate-400 pb-1.5 border-b border-slate-800 mb-1.5">
+                                <span><i class="fa-solid fa-envelope text-emerald-400 mr-1"></i> Executive VIP Mail Composer</span>
+                                <span id="word-counter" class="font-bold ${wordCount >= 55 && wordCount <= 95 ? 'text-emerald-400' : 'text-amber-300'}">
+                                    Words: ${wordCount} / 60–90
+                                </span>
+                            </div>
+                            <textarea id="writing-email-box"
+                                oninput="handleWritingInput(this.value)"
+                                placeholder="Subject: ...&#10;&#10;Dear ...,&#10;&#10;[Write your professional message here]&#10;&#10;Best regards,&#10;[Your Name]"
+                                class="flex-1 w-full bg-transparent text-xs md:text-sm text-white placeholder-slate-500 focus:outline-none resize-none leading-relaxed">${userAnswers.writingText}</textarea>
+                        </div>
+                    </div>
+                `;
+            }
+
+            else if (currentStation === 'final') {
+                const challenge = GAME_DATA.final[currentPage];
+                footer.classList.remove('hidden');
+                stepInd.textContent = `Challenge ${currentPage + 1} of 5`;
+                prevBtn.disabled = currentPage === 0;
+                nextBtn.disabled = currentPage === 4;
+
+                ws.innerHTML = `
+                    <div class="bg-slate-900/95 border-2 border-amber-400/50 rounded-2xl p-5 h-full flex flex-col justify-center max-w-xl mx-auto w-full text-center space-y-3">
+                        <span class="inline-block mx-auto px-3 py-1 rounded-full bg-amber-500/20 border border-amber-400 text-amber-300 text-xs font-extrabold uppercase">
+                            ${challenge.title}
+                        </span>
+                        <p class="text-xs text-sky-300 font-semibold">${challenge.instruction}</p>
+                        <p class="text-xs text-slate-300 italic">Context: ${challenge.situation}</p>
+                        <div class="bg-slate-950 p-4 rounded-xl border border-slate-700 text-base md:text-lg font-bold text-white">
+                            ${challenge.prompt}
+                        </div>
+                        <input type="text" value="${userAnswers.finalAnswers[currentPage]}"
+                            oninput="userAnswers.finalAnswers[${currentPage}] = this.value"
+                            placeholder="Type your answer here..."
+                            class="w-full px-4 py-2.5 rounded-xl bg-slate-800 border border-amber-400/50 text-center text-white font-bold text-sm focus:outline-none focus:border-amber-300">
+                        <p class="text-[11px] text-slate-400">Use <strong>Next →</strong> to answer all 5 challenges, then click <strong>Done</strong>!</p>
+                    </div>
+                `;
+            }
+        }
+
+        function nextPage() {
+            const maxPage = currentStation === 'final' ? 4 : 1;
+            if (currentPage < maxPage) {
+                currentPage++;
+                renderWorkspace();
+            }
+        }
+
+        function prevPage() {
+            if (currentPage > 0) {
+                currentPage--;
+                renderWorkspace();
+            }
+        }
+
+        /* -------------------------------------------------------------------
+           7. INTERACCIONES DE CADA ESTACIÓN (VOZ, AUDIO, OPCIONES, TEXTO)
+        ------------------------------------------------------------------- */
+        function selectReadingOption(qIdx, oIdx) {
+            userAnswers.readingChoices[qIdx] = oIdx;
+            renderWorkspace();
+        }
+
+        function selectListeningOption(qIdx, oIdx) {
+            userAnswers.listeningChoices[qIdx] = oIdx;
+            renderWorkspace();
+        }
+
+        function handleWritingInput(val) {
+            userAnswers.writingText = val;
+            const wc = countWords(val);
+            const counter = document.getElementById('word-counter');
+            if (counter) {
+                counter.textContent = `Words: ${wc} / 60–90`;
+                counter.className = `font-bold ${wc >= 55 && wc <= 95 ? 'text-emerald-400' : 'text-amber-300'}`;
+            }
+        }
+
+        function countWords(str) {
+            return str.trim().split(/\s+/).filter(Boolean).length;
+        }
+
+        // Listening Audio Controls (Play, Pause, Resume, Restart & Local File Support)
+        function loadLocalAudioFile(event) {
+            const file = event.target.files[0];
+            if (file) {
+                stopAllListeningAudio();
+                customAudioUrl = URL.createObjectURL(file);
+                setBotState('AUDIO LOADED', '🎧', `Loaded local audio file: <strong>${file.name}</strong>. Click the play button to listen!`);
+            }
+        }
+
+        function updateAudioPlayerUI() {
+            const btn = document.getElementById('play-audio-btn');
+            const icon = document.getElementById('play-audio-icon');
+            const badge = document.getElementById('audio-state-badge');
+            if (!btn || !icon || !badge) return;
+
+            if (audioPlaybackState === 'playing') {
+                btn.classList.add('animate-pulse');
+                btn.title = 'Pause Audio';
+                icon.className = 'fa-solid fa-pause';
+                badge.textContent = 'Playing';
+                badge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/40';
+            } else if (audioPlaybackState === 'paused') {
+                btn.classList.remove('animate-pulse');
+                btn.title = 'Resume Audio';
+                icon.className = 'fa-solid fa-play';
+                badge.textContent = 'Paused';
+                badge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-400/40';
+            } else {
+                btn.classList.remove('animate-pulse');
+                btn.title = 'Play Audio';
+                icon.className = 'fa-solid fa-play';
+                badge.textContent = 'Ready';
+                badge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-800 text-slate-400';
+            }
+        }
+
+        function stopAllListeningAudio() {
+            window.speechSynthesis.cancel();
+            if (activeAudioElement) {
+                activeAudioElement.pause();
+                activeAudioElement.currentTime = 0;
+                activeAudioElement = null;
+            }
+            audioPlaybackState = 'stopped';
+            updateAudioPlayerUI();
+        }
+
+        function restartListeningAudio() {
+            stopAllListeningAudio();
+            toggleListeningAudio();
+        }
+
+        function toggleListeningAudio() {
+            // Case 1: Custom uploaded audio file
+            if (customAudioUrl) {
+                if (!activeAudioElement) {
+                    activeAudioElement = new Audio(customAudioUrl);
+                    activeAudioElement.onended = () => {
+                        audioPlaybackState = 'stopped';
+                        activeAudioElement = null;
+                        updateAudioPlayerUI();
+                    };
+                }
+                if (audioPlaybackState === 'playing') {
+                    activeAudioElement.pause();
+                    audioPlaybackState = 'paused';
+                } else {
+                    activeAudioElement.play();
+                    audioPlaybackState = 'playing';
+                }
+                updateAudioPlayerUI();
+                return;
+            }
+
+            // Case 2: Built-in English voice synthesis with Play / Pause / Resume
+            if (audioPlaybackState === 'playing') {
+                window.speechSynthesis.pause();
+                audioPlaybackState = 'paused';
+                updateAudioPlayerUI();
+                return;
+            }
+
+            if (audioPlaybackState === 'paused' && window.speechSynthesis.paused) {
+                window.speechSynthesis.resume();
+                audioPlaybackState = 'playing';
+                updateAudioPlayerUI();
+                return;
+            }
+
+            window.speechSynthesis.cancel();
+            const item = GAME_DATA.listening[currentCardIndex];
+            const utterance = new SpeechSynthesisUtterance(item.script);
+            utterance.lang = 'en-US';
+            utterance.rate = 0.95;
+
+            utterance.onend = () => {
+                audioPlaybackState = 'stopped';
+                updateAudioPlayerUI();
+            };
+            utterance.onerror = () => {
+                audioPlaybackState = 'stopped';
+                updateAudioPlayerUI();
+            };
+
+            audioPlaybackState = 'playing';
+            updateAudioPlayerUI();
+            window.speechSynthesis.speak(utterance);
+        }
+
+        // Speech Recognition in Speaking (Web Speech API)
+        function initSpeechRecognition() {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRecognition) return;
+
+            recognition = new SpeechRecognition();
+            recognition.lang = 'en-US';
+            recognition.continuous = true;
+            recognition.interimResults = true;
+
+            recognition.onresult = (event) => {
+                let transcript = '';
+                for (let i = 0; i < event.results.length; i++) {
+                    transcript += event.results[i][0].transcript + ' ';
+                }
+                userAnswers.speakingTranscript = transcript.trim();
+                const box = document.getElementById('speaking-transcript-box');
+                if (box) box.value = userAnswers.speakingTranscript;
+            };
+
+            recognition.onerror = () => {
+                stopRecordingIfActive();
+            };
+
+            recognition.onend = () => {
+                if (isRecording) {
+                    try { recognition.start(); } catch (e) { stopRecordingIfActive(); }
+                }
+            };
+        }
+
+        function toggleSpeechRecording() {
+            if (!recognition) {
+                setBotState('MIC NOTICE', '🎙️', 'Your browser does not support automatic speech recognition. You can speak aloud with your partner and type a summary of your response in the box below!');
+                return;
+            }
+            if (isRecording) {
+                stopRecordingIfActive();
+            } else {
+                try {
+                    isRecording = true;
+                    recognition.start();
+                    const micBtn = document.getElementById('mic-btn');
+                    const micStatus = document.getElementById('mic-status');
+                    if (micBtn) micBtn.classList.add('mic-recording');
+                    if (micStatus) micStatus.textContent = '🔴 Listening... Speak clearly in English now! Click again to stop.';
+                } catch (e) {
+                    stopRecordingIfActive();
+                }
+            }
+        }
+
+        function stopRecordingIfActive() {
+            isRecording = false;
+            if (recognition) {
+                try { recognition.stop(); } catch (e) {}
+            }
+            const micBtn = document.getElementById('mic-btn');
+            const micStatus = document.getElementById('mic-status');
+            if (micBtn) micBtn.classList.remove('mic-recording');
+            if (micStatus) micStatus.textContent = 'Recording paused. Click the microphone to continue speaking or press Done.';
+        }
+
+        function clearTranscript() {
+            userAnswers.speakingTranscript = '';
+            const box = document.getElementById('speaking-transcript-box');
+            if (box) box.value = '';
+        }
+
+        /* -------------------------------------------------------------------
+           8. ACE SCANNER BOT, CHIPS FOR CLUES & EVALUATION
+        ------------------------------------------------------------------- */
+        function setBotState(pillText, faceEmoji, htmlMessage, isScanning = false) {
+            const card = document.getElementById('ace-bot-card');
+            document.getElementById('bot-status-pill').textContent = pillText;
+            document.getElementById('bot-face').textContent = faceEmoji;
+            document.getElementById('bot-feedback-text').innerHTML = htmlMessage;
+            if (isScanning) {
+                card.classList.add('scanning');
+            } else {
+                card.classList.remove('scanning');
+            }
+        }
+
+        function useChipForHint() {
+            if (!currentStation) {
+                setBotState('SELECT FIRST', '♠️', 'Please choose one of the 4 stations first before exchanging a chip for a clue!');
+                return;
+            }
+            if (currentPlayer.chips <= 0) {
+                setBotState('NO CHIPS', '🪙', '<p class="text-red-400 font-bold">You have 0 chips left!</p><p>Complete a station successfully to earn more chips.</p>');
+                return;
+            }
+
+            currentPlayer.chips--;
+            updateChipsDisplay();
+
+            if (window.syncPlayerStateToCloud) {
+                window.syncPlayerStateToCloud(`Exchanged 1 chip for a clue in ${currentStation.toUpperCase()}`);
+            }
+
+            let clueText = '';
+            if (currentStation === 'final') {
+                clueText = GAME_DATA.final[currentPage].clue;
+            } else {
+                clueText = GAME_DATA[currentStation][currentCardIndex].clue;
+            }
+
+            setBotState('CLUE UNLOCKED', '💡', `<p class="text-amber-300 font-bold">1 Chip Exchanged! Here is your Ace Clue:</p><p>${clueText}</p>`);
+        }
+
+        function handleDoneClick(forcedByTimeout = false) {
+            if (!currentStation) return;
+            stopRecordingIfActive();
+            stopAllListeningAudio();
+
+            // Activate laser scanner animation on the Ace Card Bot
+            setBotState('SCANNING...', '🔍', '<p class="text-sky-300 font-bold animate-pulse">Scanning your work for B1+/B2 accuracy, vocabulary, and task completion...</p>', true);
+
+            setTimeout(() => {
+                evaluateCurrentStation(forcedByTimeout);
+            }, 1300);
+        }
+
+        function evaluateCurrentStation(forcedByTimeout) {
+            let passed = false;
+            let feedbackHtml = '';
+
+            if (currentStation === 'speaking') {
+                const item = GAME_DATA.speaking[currentCardIndex];
+                const text = userAnswers.speakingTranscript.toLowerCase();
+                const words = countWords(text);
+                const matchedKeywords = item.keywords.filter(kw => text.includes(kw));
+
+                if (words < 8) {
+                    passed = false;
+                    feedbackHtml = `
+                        <p class="text-red-400 font-bold">❌ Insufficient Speech Detected (${words} words).</p>
+                        <p>You must speak in English to resolve the situation! Try explaining the problem and proposing a solution.</p>
+                        <p class="text-amber-300 text-[11px]"><strong>Clue:</strong> ${item.clue}</p>
+                    `;
+                } else if (matchedKeywords.length < 2 && words < 18) {
+                    passed = false;
+                    feedbackHtml = `
+                        <p class="text-amber-300 font-bold">⚠️ Good start, but add more B1+/B2 professional details!</p>
+                        <p>Try including key terms like: <em>${item.keywords.slice(0, 4).join(', ')}</em>.</p>
+                        <p class="text-sky-300 text-[11px]"><strong>Tip:</strong> ${item.clue}</p>
+                    `;
+                } else {
+                    passed = true;
+                    feedbackHtml = `
+                        <p class="text-emerald-400 font-extrabold">✅ Excellent Speaking Performance! (+1 Chip)</p>
+                        <p>You spoke ${words} words and used strong professional vocabulary (${matchedKeywords.slice(0, 3).join(', ') || 'diplomatic tone'}).</p>
+                        <p class="text-sky-300 text-[11px]">You are ready for the next station!</p>
+                    `;
+                }
+            }
+
+            else if (currentStation === 'reading') {
+                const item = GAME_DATA.reading[currentCardIndex];
+                let correctCount = 0;
+                let wrongNumbers = [];
+
+                item.questions.forEach((q, idx) => {
+                    if (userAnswers.readingChoices[idx] === q.correct) {
+                        correctCount++;
+                    } else {
+                        wrongNumbers.push(idx + 1);
+                    }
+                });
+
+                if (userAnswers.readingChoices.includes(null) && !forcedByTimeout) {
+                    passed = false;
+                    feedbackHtml = `
+                        <p class="text-amber-300 font-bold">⚠️ Incomplete Answers!</p>
+                        <p>Click <strong>Next</strong> to make sure you answered all 3 multiple-choice questions before clicking Done.</p>
+                    `;
+                } else if (correctCount < 3) {
+                    passed = false;
+                    feedbackHtml = `
+                        <p class="text-red-400 font-bold">❌ Score: ${correctCount}/3. Check Question(s): #${wrongNumbers.join(', #')}.</p>
+                        <p class="text-amber-300 text-[11px]"><strong>Clue:</strong> ${item.clue}</p>
+                    `;
+                } else {
+                    passed = true;
+                    feedbackHtml = `
+                        <p class="text-emerald-400 font-extrabold">✅ Perfect Score (3/3)! (+1 Chip)</p>
+                        <p>You accurately analyzed the business text and selected every correct detail.</p>
+                    `;
+                }
+            }
+
+            else if (currentStation === 'listening') {
+                const item = GAME_DATA.listening[currentCardIndex];
+                let correctCount = 0;
+                let wrongNumbers = [];
+
+                item.questions.forEach((q, idx) => {
+                    if (userAnswers.listeningChoices[idx] === q.correct) {
+                        correctCount++;
+                    } else {
+                        wrongNumbers.push(idx + 1);
+                    }
+                });
+
+                if (userAnswers.listeningChoices.includes(null) && !forcedByTimeout) {
+                    passed = false;
+                    feedbackHtml = `
+                        <p class="text-amber-300 font-bold">⚠️ Incomplete Answers!</p>
+                        <p>Use <strong>Next</strong> to make sure you answered all 4 listening questions before clicking Done.</p>
+                    `;
+                } else if (correctCount < 4) {
+                    passed = false;
+                    feedbackHtml = `
+                        <p class="text-red-400 font-bold">❌ Score: ${correctCount}/4. Check Question(s): #${wrongNumbers.join(', #')}.</p>
+                        <p>Listen to the audio again carefully and correct your answers.</p>
+                        <p class="text-amber-300 text-[11px]"><strong>Clue:</strong> ${item.clue}</p>
+                    `;
+                } else {
+                    passed = true;
+                    feedbackHtml = `
+                        <p class="text-emerald-400 font-extrabold">✅ Perfect Listening Score (4/4)! (+1 Chip)</p>
+                        <p>Great B1+/B2 comprehension! You identified every key detail accurately.</p>
+                    `;
+                }
+            }
+
+            else if (currentStation === 'writing') {
+                const item = GAME_DATA.writing[currentCardIndex];
+                const text = userAnswers.writingText.trim();
+                const lower = text.toLowerCase();
+                const wc = countWords(text);
+                const hasGreeting = /(dear|hello|hi|good morning|good afternoon)/i.test(lower);
+                const hasClosing = /(regards|sincerely|best|thank you|thanks)/i.test(lower);
+
+                let errors = [];
+                if (wc < 45) errors.push(`Too short (${wc} words; aim for 60–90 words)`);
+                if (wc > 105) errors.push(`Too long (${wc} words; keep it concise between 60–90 words)`);
+                if (!hasGreeting) errors.push("Missing a formal greeting (e.g., 'Dear Mr./Ms...')");
+                if (!hasClosing) errors.push("Missing a professional closing (e.g., 'Best regards,')");
+
+                if (errors.length > 0) {
+                    passed = false;
+                    feedbackHtml = `
+                        <p class="text-red-400 font-bold">❌ VIP Mail Needs Adjustment:</p>
+                        <ul class="list-disc pl-4 text-[11px] text-slate-200 space-y-0.5">
+                            ${errors.map(e => `<li>${e}</li>`).join('')}
+                        </ul>
+                        <p class="text-amber-300 text-[11px] mt-1"><strong>Clue:</strong> ${item.clue}</p>
+                    `;
+                } else {
+                    passed = true;
+                    feedbackHtml = `
+                        <p class="text-emerald-400 font-extrabold">✅ Executive Email Approved! (${wc} words • +1 Chip)</p>
+                        <p>Clear structure, appropriate register, greeting, and closing verified.</p>
+                    `;
+                }
+            }
+
+            else if (currentStation === 'final') {
+                let score = 0;
+                let missed = [];
+                GAME_DATA.final.forEach((ch, idx) => {
+                    const ans = userAnswers.finalAnswers[idx].trim().toLowerCase().replace(/[.!?]+$/, '');
+                    const valid = ch.answers.map(a => a.toLowerCase().replace(/[.!?]+$/, ''));
+                    if (valid.includes(ans)) {
+                        score++;
+                    } else {
+                        missed.push(idx + 1);
+                    }
+                });
+
+                if (score < 4) {
+                    passed = false;
+                    feedbackHtml = `
+                        <p class="text-red-400 font-bold">❌ Final Jackpot Score: ${score}/5</p>
+                        <p>Review Challenge(s): #${missed.join(', #')}. You need at least 4/5 to win the Jackpot!</p>
+                        <p class="text-amber-300 text-[11px]"><strong>Clue for #${missed[0]}:</strong> ${GAME_DATA.final[missed[0] - 1].clue}</p>
+                    `;
+                } else {
+                    passed = true;
+                    feedbackHtml = `
+                        <p class="text-amber-300 font-extrabold text-sm">🏆 JACKPOT WINNER! (${score}/5) +3 BONUS CHIPS!</p>
+                        <p>Congratulations! You mastered the B1+/B2 professional English challenges!</p>
+                    `;
+                }
+            }
+
+            // Resultado final del escaneo del Bot Carta de As
+            if (passed) {
+                stopTimer();
+                stationLocked = false; // Desbloquea el menú para elegir la siguiente estación
+                currentPlayer.completed[currentStation] = true;
+                currentPlayer.chips += (currentStation === 'final' ? 3 : 1);
+                updateChipsDisplay();
+                updateStationLockUI();
+
+                setBotState('APPROVED!', '😎', feedbackHtml, false);
+                document.getElementById('choose-next-banner').classList.remove('hidden');
+
+                const allFourDone = currentPlayer.completed.speaking &&
+                                    currentPlayer.completed.listening &&
+                                    currentPlayer.completed.writing &&
+                                    currentPlayer.completed.reading;
+
+                const roundBox = document.getElementById('player-round-complete-box');
+                if (allFourDone && roundBox) {
+                    roundBox.classList.remove('hidden');
+                }
+
+                if (window.syncPlayerStateToCloud) {
+                    window.syncPlayerStateToCloud(
+                        allFourDone
+                            ? `🏆 Completed ALL 4 SKILLS ROUND! (+${currentStation === 'final' ? 3 : 1} chip)`
+                            : `✅ Passed ${currentStation.toUpperCase()} (+${currentStation === 'final' ? 3 : 1} chip)`
+                    );
+                }
+
+                // ¡Fuegos artificiales de papelitos de colores!
+                launchFireworksConfetti();
+            } else {
+                if (window.syncPlayerStateToCloud) {
+                    window.syncPlayerStateToCloud(`⚠️ Attempted ${currentStation.toUpperCase()} (Needs retry)`);
+                }
+                setBotState('TRY AGAIN', '🧐', feedbackHtml, false);
+                document.getElementById('choose-next-banner').classList.add('hidden');
+            }
+        }
+
+        function continuePlayingAfterRound() {
+            const roundBox = document.getElementById('player-round-complete-box');
+            if (roundBox) roundBox.classList.add('hidden');
+            setBotState('KEEP PLAYING', '🎰', 'Great! Choose another station or enter the <strong>Final Jackpot</strong> challenge on the menu.');
+            if (window.syncPlayerStateToCloud) {
+                window.syncPlayerStateToCloud('Chose to continue playing after completing the 4-skill round');
+            }
+        }
+
+        function finishPlayerSession() {
+            if (window.syncPlayerStateToCloud) {
+                window.syncPlayerStateToCloud('Finished their game session after completing the round');
+            }
+            if (window.showGameOverModal) {
+                window.showGameOverModal('You completed the 4-skill round and finished your session!');
+            }
+        }
+
+        /* -------------------------------------------------------------------
+           9. EFECTO DE PAPELITOS DE COLORES EXPLOTANDO TIPO FUEGOS ARTIFICIALES
+        ------------------------------------------------------------------- */
+        function launchFireworksConfetti() {
+            const duration = 2600;
+            const end = Date.now() + duration;
+            const colors = ['#fbbf24', '#ef4444', '#38bdf8', '#22c55e', '#a855f7', '#ffffff'];
+
+            (function frame() {
+                confetti({
+                    particleCount: 7,
+                    angle: 60,
+                    spread: 70,
+                    origin: { x: 0.15, y: 0.65 },
+                    colors: colors
+                });
+                confetti({
+                    particleCount: 7,
+                    angle: 120,
+                    spread: 70,
+                    origin: { x: 0.85, y: 0.65 },
+                    colors: colors
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            }());
+
+            // Explosión central adicional tipo firework
+            setTimeout(() => {
+                confetti({
+                    particleCount: 90,
+                    spread: 110,
+                    startVelocity: 45,
+                    origin: { x: 0.5, y: 0.45 },
+                    colors: colors
+                });
+            }, 350);
+        }
+    </script>
+</body>
+</html>
